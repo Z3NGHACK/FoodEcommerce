@@ -1,1 +1,1 @@
-# FoodEcommerce
+# FoodEcommerce - Group project - Vue
