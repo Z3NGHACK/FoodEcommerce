@@ -24,6 +24,7 @@
             des: String,
             button:{
                 type: Object,
+                required: true, 
                 default:()=>({
                     id: 'button',
                     class:'Add-to-Cart',

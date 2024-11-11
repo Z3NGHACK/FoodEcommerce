@@ -39,7 +39,7 @@
 
   <section class="top_sell">  
     <SellingItem
-      v-for="(sellingitem, index) in sellingitems"
+      v-for="(sellingItem, index) in sellingitems"
       :key="index"
       :image="sellingitem.img"
       :title="sellingitem.title"
@@ -95,6 +95,7 @@
   </footer>
 </template>
 <script>
+import { services, sellingItems, features, products,comments } from '@/components/data/data';
 import Comment from '@/components/comment.vue';
 import Feature from '@/components/Feature.vue';
 import Product from '@/components/product.vue';
@@ -116,176 +117,13 @@ export default{
   data(){
     return{
       //description need to be change
-      services:[
-        {img: '',
-         title: 'Free Delivery on order above $100',
-         des: 'Free Delivery on all orders'
-        },
-        {img: '',
-         title: 'Money Return Safely',
-         des: 'Money Back Gaurantee within 24 Hrs'
-        },
-        {img: '',
-         title: 'Customer Service 24/7',
-         des: 'Online Support'
-        }
-      ],
+      services,
       //description need to be change
-      sellingitems:[
-        {
-          title: 'Fresh Vegetable',
-          des: ' Nutrient-rich and locally grown, our fresh vegetables are harvested at peak ripeness for optimal flavor and quality.',
-          img: ''
-        },
-        {
-          title: 'Organic Fruits',
-          des: 'From sustainable farms, our organic fruits are free from pesticides, delivering pure, natural sweetness.',
-          img: ''
-        },
-        {
-          title: 'Organic Farming',
-          des: 'Our eco-friendly farming nurtures soil and biodiversity, producing food that’s good for you and the planet.',
-          img: ''
-        }
-      ],
+      sellingItems,
       //description need to be change
-      features:[
-        {
-          weightPrize: '1kg/$3.50',
-          button: 'button1',
-          title: 'Strawberry',
-          rating: '',
-          category: 'Fruits',
-          img: ''
-        },
-        {
-          weightPrize: '1kg/$3.20',
-          button: 'button2',
-          title: 'Pomegranate',
-          rating: '',
-          category: 'Fruits',
-          img: ''
-        }
-      ],
-      products:[
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        },
-        {
-          title: 'Peaches',
-          img: '',
-          price: '500g',
-          priceInt: 1.29,
-          des: String,
-          button: 'button1',
-        }
-      ],
-      comments:[
-        {    
-          title: 'Quality Products',
-          des: 'The freshness and quality of their products are unmatched, making every purchase worth it.',
-          img: '',
-          name: 'Eleanor Pena'
-        },
-        {    
-          title: 'Affordable Prices',
-          des: 'Great value for the quality offered, with prices that fit any budget.',
-          img: '',
-          name: 'Bessie Cooper'
-        },
-        {    
-          title: 'Mindblowing Service',
-          des: 'The customer service is exceptional, always going above and beyond to ensure a fantastic shopping experience.',
-          img: '',
-          name: 'Leslie Alexander'
-        },
-
-      ],
+      features,
+      products,
+      comments,
     }
   },
   

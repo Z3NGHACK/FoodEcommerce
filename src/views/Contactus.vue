@@ -1,5 +1,3 @@
 <template>
-    <h2>
-        This is Contact page
-    </h2>
+    This is contact us page
 </template>
