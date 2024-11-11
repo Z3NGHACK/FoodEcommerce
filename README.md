@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# FoodEcommerce - Group project - Vue
-=======
 # FoodEcommerce
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -36,4 +33,3 @@ npm run build
 ```sh
 npm run test:unit
 ```
->>>>>>> 986f6a8 (https://github.com/Z3NGHACK/FoodEcommerce/tree/main)

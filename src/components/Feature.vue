@@ -24,6 +24,7 @@ export default{
         img: String,
         button:{
             type: Object,
+            required: true, 
             default:()=>({
                 id: 'button',
                 class: 'add-to-cart-button',
