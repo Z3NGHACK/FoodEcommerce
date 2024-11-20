@@ -21,7 +21,7 @@
     
 </template>
 <script>
-export default{
+export default {
     props:{
         weightPrize: String,
         title: String,

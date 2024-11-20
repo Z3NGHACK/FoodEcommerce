@@ -42,7 +42,7 @@ import { RouterLink, RouterView } from 'vue-router';
   }
   header{
     display: flex;
-    background: url('/src/components/image/top_bg.jpg') center/ cover no-repeat;
+    background: url('/src/assets/image/top_bg.jpg') center/ cover no-repeat;
     object-fit: cover;
     width: 100%;
     height: 50px;

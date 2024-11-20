@@ -28,7 +28,7 @@ export default {
   .delivery{
     display: flex;
     border: #47B749 1px solid;
-    width: 400px;
+    width: 380px;
     padding: 20px;
     border-radius: 10px;
     align-items: center;
@@ -37,7 +37,6 @@ export default {
     box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.25);
     transition: 0.2s ease;
     cursor: pointer;
-
   }
   .delivery:hover{
     background-color: #47B749;
@@ -50,7 +49,6 @@ export default {
   img{
     width: 50px;
     height: 50px;
-    background-color: red;
     border-radius: 10px;
   }
 </style>

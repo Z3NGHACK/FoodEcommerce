@@ -6,18 +6,24 @@
       <p>
         {{des}}
       </p>
-      <img alt="#" srcs="img">
+      <img :src="img" alt="#" >
     </div>
 </template>
+
 <script>
-export default{
-    props:{
-        img: String,
-        title: String,
-        des: String
-    }
-}
+export default {
+  props: {
+    img: 
+    {
+      type: String,
+      Required: true
+    },
+    title: String,
+    des: String,
+  },
+};
 </script>
+
 <style scoped>
   .top_item{
     display: flex;
@@ -49,7 +55,6 @@ export default{
   img{
     width: 100%;
     height: 150px;
-    background-color: red;
     border-radius: 10px;
   }
   p{

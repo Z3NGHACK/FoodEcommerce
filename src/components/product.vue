@@ -45,7 +45,6 @@
         transition: 0.2s ease;
     }
     img{
-        background-color: red;
         width: 100%;
         height: 150px;
         border-radius: 10px;

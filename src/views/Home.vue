@@ -1,25 +1,26 @@
 <template>
   <section class="header">
     <div class="title">
-      <h2>
+      <h3>
         Welcome To
-      </h2>
-      <img src="" alt="#">
+      </h3>
+      <img src="@/assets/image/logo (2).png" alt="#">
       <span>Eat Fresh, Live Well, Shop Well</span>
     </div>
     <div class="search">
-      <input type="text" class="text">
-      <a><i class="ri-search-2-line"></i></a>
+      <a>
+        <i class="ri-search-2-line"></i>  
+        <input type="text" class="text" placeholder="Discover your preferred goods">
+      </a>
     </div>
   </section>
 
   <section class="about">
     <div class="foodAbout">
-      <img src="" alt="#">
+      <img src="@/assets/image/about.png" alt="#">
     </div>
     <div class="aboutDes">
-      <h2>About </h2>
-      <!-- <descript need to be change -->
+      <h2>About <a>We</a> Fresh Store</h2>
       <p>
         We Fresh is dedicated to providing high-quality groceries with a focus  on fresh produce and a variety of essentials. We strive to offer an excellent shopping experience, ensuring convenience and a wide selection ofproducts for our customers. Whether it’s fresh fruits, vegetables, or pantry staples, We Fresh aims to meet your daily needs with the best quality and service.
       </p>
@@ -45,7 +46,7 @@
     <SellingItem
       v-for="(sellingItem, index) in sellingItems"
       :key="index"
-      :image="sellingItem.img"
+      :img="sellingItem.img"
       :title="sellingItem.title"
       :des="sellingItem.des"
     />
@@ -69,9 +70,8 @@
   <div class="line"></div>
   <h2>Our Proucts</h2>
   <section class="products">
-
     <Product
-      v-for="(product, index) in products"
+      v-for="(product, index) in displayedProducts"
       :key="index"
       :title="product.title"
       :img="product.img"
@@ -80,14 +80,13 @@
       :des="product.des"
       :button="product.button"
     />
-
   </section>
-  <div class="explore">
-      <span>
-        Explore all Products
-        <i class="ri-arrow-right-line"></i>
-      </span>
-    </div>
+  <div class="explore" @click="toggleDisplay">
+    <span>
+      {{ showAll ? 'Show Less' : 'Explore More' }}
+      <i class="ri-arrow-right-line"></i>
+    </span>
+  </div>
 
   <div class="line"></div>
   <h2>
@@ -112,8 +111,7 @@
     <Footer/>
   </footer>
 </template>
-<style scoped>
-</style>
+
 
 <script>
 import { services, sellingItems, features, products,comments } from '@/components/data/data';
@@ -146,8 +144,18 @@ export default{
       features,
       products,
       comments,
+      showAll: false
     }
   },
-  
+  computed:{
+    displayedProducts(){
+      return this.showAll ? this.products : this.products.slice(0, 10);
+    },
+  },
+  methods:{
+    toggleDisplay(){
+      this.showAll = !this.showAll;
+    }
+  }
 }
 </script>
