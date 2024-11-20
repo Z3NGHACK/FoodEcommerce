@@ -1,17 +1,17 @@
 <template>
-  <header>
+  <section class="header">
     <div class="title">
       <h2>
         Welcome To
       </h2>
       <img src="" alt="#">
-      <span>Grocery Store</span>
+      <span>Eat Fresh, Live Well, Shop Well</span>
     </div>
     <div class="search">
       <input type="text" class="text">
       <a><i class="ri-search-2-line"></i></a>
     </div>
-  </header>
+  </section>
 
   <section class="about">
     <div class="foodAbout">
@@ -21,33 +21,39 @@
       <h2>About </h2>
       <!-- <descript need to be change -->
       <p>
-        Our store is dedicated to providing high-quality, fresh, and organic products straight from local farms to your table. We believe in the importance of healthy living and sustainable practices, offering a wide range of fruits, vegetables, and other farm-fresh items grown without harmful chemicals. With a focus on quality, sustainability, and customer satisfaction, our store is your trusted source for nutritious and environmentally friendly food options.
+        We Fresh is dedicated to providing high-quality groceries with a focus  on fresh produce and a variety of essentials. We strive to offer an excellent shopping experience, ensuring convenience and a wide selection ofproducts for our customers. Whether it’s fresh fruits, vegetables, or pantry staples, We Fresh aims to meet your daily needs with the best quality and service.
       </p>
       <button type="button"> View Our Achievement</button>
     </div>
   </section>
 
-  <section class="sevices">
+  <div class="line"></div>
+  <h2>Services</h2>
+  <section class="services">
     <Service
       v-for="(service, index) in services"
       :key="index"
-      :image="service.img"
+      :img="service.img" 
       :title="service.title"
       :des="service.des"
-    />
+      />
   </section>
 
-  <section class="top_sell">  
+  <div class="line"></div>
+  <h2>Top Selling items</h2>
+  <section class="top_sell"> 
     <SellingItem
-      v-for="(sellingItem, index) in sellingitems"
+      v-for="(sellingItem, index) in sellingItems"
       :key="index"
-      :image="sellingitem.img"
-      :title="sellingitem.title"
-      :des="sellingitem.des"
+      :image="sellingItem.img"
+      :title="sellingItem.title"
+      :des="sellingItem.des"
     />
   </section>
 
-  <section class="Feature_items">
+  <div class="line"></div>
+  <h2>Feauture Items</h2>
+  <section class="feature">
     <Feature
       v-for="(feature, index) in features"
       :key="index"
@@ -60,6 +66,8 @@
     />
   </section>
 
+  <div class="line"></div>
+  <h2>Our Proucts</h2>
   <section class="products">
 
     <Product
@@ -74,7 +82,17 @@
     />
 
   </section>
+  <div class="explore">
+      <span>
+        Explore all Products
+        <i class="ri-arrow-right-line"></i>
+      </span>
+    </div>
 
+  <div class="line"></div>
+  <h2>
+      Our Honorable Customer Speak 
+  </h2>
   <section class="comments">
     <Comment
       v-for="(comment, index) in comments"
@@ -94,6 +112,9 @@
     <Footer/>
   </footer>
 </template>
+<style scoped>
+</style>
+
 <script>
 import { services, sellingItems, features, products,comments } from '@/components/data/data';
 import Comment from '@/components/comment.vue';
@@ -104,6 +125,7 @@ import Service from '@/components/Service.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
 
+import '@/components/styling/Home.css'
 export default{
   components:{
     Service,

@@ -1,7 +1,4 @@
 <template>
-    <h1>
-        Our Honorable Customer Speak 
-    </h1>
     <p>
         We have been serving our customer from a long time
     </p>
