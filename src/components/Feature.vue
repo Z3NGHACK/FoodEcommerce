@@ -46,8 +46,8 @@ export default {
         flex-direction: column;
         text-align: center;
         border: #47B749 1px solid;
-        width: 380px;
-        height: 400px;
+        width: 360px;
+        height: 390px;
         padding: 20px;
         border-radius: 10px;
         align-items: center;

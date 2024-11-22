@@ -15,7 +15,7 @@
     </div>
   </section>
 
-  <section class="about">
+  <section class="about padding">
     <div class="foodAbout">
       <img src="@/assets/image/about.png" alt="#">
     </div>
@@ -54,7 +54,7 @@
 
   <div class="line"></div>
   <h2>Feauture Items</h2>
-  <section class="feature">
+  <section class="feature padding">
     <Feature
       v-for="(feature, index) in features"
       :key="index"
@@ -69,6 +69,13 @@
 
   <div class="line"></div>
   <h2>Our Proucts</h2>
+  <div class="inp">
+    <select id="grocery">
+      <option value="All">All</option>
+      <option value="fruit">Fruit</option>
+      <option value="vegetable">Vegetable</option>
+    </select>
+  </div>
   <section class="products">
     <Product
       v-for="(product, index) in displayedProducts"
@@ -81,7 +88,7 @@
       :button="product.button"
     />
   </section>
-  <div class="explore" @click="toggleDisplay">
+  <div class="explore" @click="toggleDisplayProduct">
     <span>
       {{ showAll ? 'Show Less' : 'Explore More' }}
       <i class="ri-arrow-right-line"></i>
@@ -103,6 +110,7 @@
     />
   </section>
 
+  <div class="line"></div>
   <section class="newsletter">
     <Newsletter/>
   </section>
@@ -153,7 +161,7 @@ export default{
     },
   },
   methods:{
-    toggleDisplay(){
+    toggleDisplayProduct(){
       this.showAll = !this.showAll;
     }
   }

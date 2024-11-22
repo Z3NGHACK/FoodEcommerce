@@ -25,33 +25,36 @@ export const sellingItems = [
   export const features = [
     { weightPrize: '1kg/$3.50', button: 'button1', title: 'Strawberry', rating: '', category: 'Fruits', img: f1 },
     { weightPrize: '1kg/$3.20', button: 'button2', title: 'Pomegranate', rating: '', category: 'Fruits', img: f2 },
+    { weightPrize: '1kg/$3.50', button: 'button1', title: 'Strawberry', rating: '', category: 'Fruits', img: f1 },
+    { weightPrize: '1kg/$3.50', button: 'button1', title: 'Strawberry', rating: '', category: 'Fruits', img: f1 },
+    { weightPrize: '1kg/$3.20', button: 'button2', title: 'Pomegranate', rating: '', category: 'Fruits', img: f2 },
     { weightPrize: '1kg/$3.50', button: 'button1', title: 'Strawberry', rating: '', category: 'Fruits', img: f1 }
   ];
   
   export const products = [
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit" },
 
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable" },
       
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable"  },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable"  },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable"  },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable"  },
+      { title: 'Peachesv', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category: "vegetable"  },
       
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
-      { title: 'Peaches', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}" },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit"  },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit"  },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit"  },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit"  },
+      { title: 'Peachesf', img: p1, price: '500g', priceInt: 1.29, des: '', button: "{type: 'button1'}", category:"fruit"  },
     // ... add other products
   ];
   

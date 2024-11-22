@@ -3,21 +3,25 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
 }
+html,
 body{
     padding: 0;
     margin: 0 ;
-    width: 100%;
 }
-.container{
-    width: 100%;
-}
+
 h2{
     color: #47B749;
     text-align: center;
     margin: 30px 0;
     font-size: 2rem;
 }
+.padding{
+    width: 90%;
+    padding:0 30px ;
+} 
+
 .line{
     margin: 50px auto 30px auto; 
     border-bottom: #47B749 1px solid;
@@ -34,13 +38,30 @@ h2{
     display: flex;
     justify-content: space-between;
 }
+.feature{
+    overflow-x: auto;
+    display: flex;
+    gap: 20px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 450px;
+    margin: 0 auto;
+}
+.feature::-webkit-scrollbar{
+    display: none;
+}
+.feature > *{
+    flex-shrink: 0;
+}
 .top_sell{
     margin: auto;
     width: 70%;
 }
 .products{
     display: grid;
+    gap: 30px;
     grid-template-columns: repeat(5, 1fr);
+    margin: 0 auto;
 }
 .explore{
     display: flex;
@@ -103,8 +124,12 @@ h2{
 .header .search:hover input{
     border-bottom: #47B749 1px solid;
 }
+.header .search input::before{
+    border: none;
+}
 .header .search:hover a{
     color: #47B749;
+    background-color: transparent !important;
 }
 .header .search:hover input::placeholder{
     color: #47B749;
@@ -126,10 +151,10 @@ h2{
     color: #fff;
     font-size: 1.1rem;
 }
-
 .about{
     display: flex;
     align-items: center;
+    margin-top: 50px;
 }
 .about img{
     width: 300px;

@@ -24,7 +24,7 @@
                     label: 'Add to Cart'
                 })
             }
-        }
+        },
     }
 </script>
 <style scoped>

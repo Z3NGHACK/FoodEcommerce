@@ -23,7 +23,7 @@
             For any help, please contact us
         </h3>
         <span>+90-12345678</span>
-        <span>www@yadgargrocery.com</span>
+        <span>www@WeFresh.com</span>
     </div>
 
     <div class="arti3">
