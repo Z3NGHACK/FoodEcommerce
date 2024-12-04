@@ -45,19 +45,20 @@ import { RouterLink, RouterView } from 'vue-router';
     background: url('/src/assets/image/top_bg.jpg') center/ cover no-repeat;
     object-fit: cover;
     width: 100%;
-    height: 50px;
+    height: 80px;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
   }
   img{
     padding-left: 20px;
-    height: 30px;
+    height: 40px;
   }
   nav{
     padding-right: 50px;
     display: flex;
     gap: 34px;
+    font-size: 1.2rem;
   }
   .link{
     color: #fff;

@@ -69,8 +69,9 @@
 
   <div class="line"></div>
   <h2>Our Proucts</h2>
-  <div class="inp">
-    <select id="grocery">
+  <div class="inp padding">
+    <h3>Category: </h3>
+    <select v-model="selectedCategory" @change="filterProducts" class="filter">
       <option value="All">All</option>
       <option value="fruit">Fruit</option>
       <option value="vegetable">Vegetable</option>
@@ -130,6 +131,7 @@ import SellingItem from '@/components/SellingItem.vue';
 import Service from '@/components/Service.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
+import AddToCart from '@/components/AddToCart.vue';
 
 import '@/components/styling/Home.css'
 export default{
@@ -140,7 +142,8 @@ export default{
     Product,
     Comment,
     Newsletter,
-    Footer
+    Footer,
+    AddToCart
   },
   data(){
     return{
@@ -152,18 +155,45 @@ export default{
       features,
       products,
       comments,
-      showAll: false
+      showAll: false,
+      allProducts: [],
+      filteredProducts: [],
+      displayedProducts: [],
+      selectedCategory: "All",
+
     }
   },
-  computed:{
-    displayedProducts(){
-      return this.showAll ? this.products : this.products.slice(0, 10);
+  async created(){
+    await this.loadProducts();
+    this.filteredProducts = this.allProducts;
+    this.updateDisplayProducts();
+  },
+   methods:{
+    async loadProducts(){
+      const fetchProducts = await new Promise((resolve) => {
+        setTimeout(() => resolve(products), 1000);
+      });
+      this.allProducts = fetchProducts;
+    },
+    filterProducts() {
+    if (this.selectedCategory === "All") {
+      this.filteredProducts = this.allProducts;
+    } else {
+      this.filteredProducts = this.allProducts.filter(
+          (product) => product.category === this.selectedCategory
+      );
+    }
+      this.updateDisplayProducts();
+    },
+    toggleDisplayProduct() {
+      this.showAll = !this.showAll;
+      this.updateDisplayProducts(); // Update displayed products after toggling
+    },
+    updateDisplayProducts() {
+      this.displayedProducts = this.showAll
+        ? this.filteredProducts
+        : this.filteredProducts.slice(0, 10);
     },
   },
-  methods:{
-    toggleDisplayProduct(){
-      this.showAll = !this.showAll;
-    }
-  }
-}
+};
 </script>
