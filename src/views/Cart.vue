@@ -80,8 +80,6 @@ export default {
     decreaseQuantity(index) {
       if (this.cartItems[index].quantity > 1) this.cartItems[index].quantity--;
     },
-    // continueShopping() {
-    //   alert("Navigating back to shopping!");
     },
     checkout() {
       alert("Proceeding to checkout!");

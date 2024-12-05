@@ -68,7 +68,6 @@
   </script>
   
   <style scoped>
-  /* Sign In Container */
   .sign-in-container {
     display: flex;
     width: 1583px;
@@ -78,7 +77,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Left Side - Sign In Form */
   .sign-in-left {
   flex: 1;
   padding: 3rem;
@@ -96,7 +94,6 @@
   font-size: 2.5rem;
 }
 
-/* Input Group Styles */
 .input-group {
   display: flex;
   align-items: center;
@@ -120,7 +117,6 @@
   margin-right: 10px;
 }
 
-/* Forgot Password Link */
 .forgot-password {
   text-align: right;
   width: 100%;
@@ -136,7 +132,6 @@
   text-decoration: underline;
 }
 
-/* Sign In Button */
 .signin-btn {
   width: 100%;
   padding: 1rem;
@@ -153,7 +148,6 @@
   background-color: #1e8449;
 }
 
-/* Social Media Icons */
 .social-icons {
   display: flex;
   justify-content: center;
@@ -178,8 +172,6 @@
   
 }
 
-
-/* Sign Up Link */
 .signup-text {
   margin-top: 1rem;
   font-size: 0.9rem;

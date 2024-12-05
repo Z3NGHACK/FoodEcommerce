@@ -148,8 +148,7 @@
     color: #ccc;
     margin-right: 10px;
   }
-  
-  /* Terms container */
+
   .terms-container {
     display: flex;
     align-items: center;
@@ -184,7 +183,6 @@
     background-color: #1e8449;
   }
   
-  /* Sign-in container */
   .signin-container {
     color: #555;
   }
