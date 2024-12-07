@@ -10,26 +10,11 @@ import { RouterLink, RouterView } from 'vue-router';
   />
   <div class="container">
     <header>
-      <img alt="Site Logo" src="@/assets/image/logo (2).png">
-      <nav>
-        <span>
-          <RouterLink class="link" active-class="active" to="/">Home</RouterLink></span>
-        <span>
-          <RouterLink class="link" active-class="active" to="/Contact">Contact</RouterLink></span>
-        <span>
-          <RouterLink class="link" active-class="active" to="/signup">Sign Up</RouterLink></span>
-        <span>
-          <RouterLink class="link" active-class="active" to="/signin">Sign In</RouterLink></span>
-        <span>
-          <RouterLink class="link" active-class="active" to="/cart">
-            <i class="ri-shopping-cart-2-line"></i>
-          </RouterLink>
-        </span>
-      </nav>
     </header>
     <RouterView />
   </div>
 </template>
+
 
 <style scoped>
   .container{
@@ -39,26 +24,6 @@ import { RouterLink, RouterView } from 'vue-router';
     text-decoration: none;
     height: 100%;
     margin-left: -32px;
-  }
-  header{
-    display: flex;
-    background: url('/src/assets/image/top_bg.jpg') center/ cover no-repeat;
-    object-fit: cover;
-    width: 100%;
-    height: 80px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-  }
-  img{
-    padding-left: 20px;
-    height: 40px;
-  }
-  nav{
-    padding-right: 50px;
-    display: flex;
-    gap: 34px;
-    font-size: 1.2rem;
   }
   .link{
     color: #fff;

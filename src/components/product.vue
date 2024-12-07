@@ -9,17 +9,17 @@
 
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
-            <AddToCart />
+            <ProductDetail />
             <button class="close-btn" @click="toggleVisibleAddToCart"><i class="ri-arrow-left-line"></i></button>
         </div>
     </div>
 </template>
 <script>
-import AddToCart from './AddToCart.vue';
+import ProductDetail from './ProductDetail.vue';
 
     export default{
         components:{
-            AddToCart,
+            ProductDetail,
         },
         props:{
             title: String,

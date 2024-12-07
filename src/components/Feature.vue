@@ -27,7 +27,7 @@
     
 </template>
 <script>
-import AddToCart from './AddToCart.vue';
+import AddToCart from './ProductDetail.vue';
 export default {
     components:{
         AddToCart,

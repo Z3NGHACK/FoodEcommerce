@@ -10,7 +10,27 @@ body{
     padding: 0;
     margin: 0 ;
 }
-
+.nav_bar{
+    display: flex;
+    background: url('/src/assets/image/top_bg.jpg') center/ cover no-repeat;
+    object-fit: cover;
+    width: 100%;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: red;
+  }
+  .nav_bar img{
+    padding-left: 20px;
+    height: 40px;
+  }
+  .nav_bar nav{
+    padding-right: 50px;
+    display: flex;
+    gap: 34px;
+    font-size: 1.2rem;
+  }
 h2{
     color: #47B749;
     text-align: center;

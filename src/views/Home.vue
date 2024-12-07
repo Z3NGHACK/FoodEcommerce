@@ -1,4 +1,22 @@
 <template>
+  <section class="nav_bar">
+      <img alt="Site Logo" src="@/assets/image/logo (2).png">
+      <nav>
+        <span>
+          <RouterLink class="link" active-class="active" to="/">Home</RouterLink></span>
+        <span>
+          <RouterLink class="link" active-class="active" to="/contact">Contact</RouterLink></span>
+        <span>
+          <RouterLink class="link" active-class="active" to="/signup">Sign Up</RouterLink></span>
+        <span>
+          <RouterLink class="link" active-class="active" to="/signin">Sign In</RouterLink></span>
+        <span>
+          <RouterLink class="link" active-class="active" to="/cart">
+            <i class="ri-shopping-cart-2-line"></i>
+          </RouterLink>
+        </span>
+      </nav>
+  </section>
   <section class="header">
     <div class="title">
       <h3>
@@ -131,7 +149,7 @@ import SellingItem from '@/components/SellingItem.vue';
 import Service from '@/components/Service.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
-import AddToCart from '@/components/AddToCart.vue';
+import AddToCart from '@/components/ProductDetail.vue';
 
 import '@/components/styling/Home.css'
 export default{
