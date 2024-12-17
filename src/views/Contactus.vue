@@ -1,3 +1,13 @@
+<script>
+import AddToCart from '@/components/AddToCart.vue';
+export default{
+  AddToCart,
+  components: {
+    AddToCart
+  }
+}
+</script>
+
 <template>
     <section class="nav_bar">
       <img alt="Site Logo" src="@/assets/image/logo (2).png">
@@ -17,10 +27,11 @@
         </span>
       </nav>
   </section>
-    <h2>
-        This is Contact page
-        This is a change on contact
-    </h2>
+  <h2>
+      This is Contact page
+      This is a change on contact
+  </h2>
+  <AddToCart/>
 </template>
 <style scoped>
 .nav_bar{

@@ -25,14 +25,39 @@
       <img src="@/assets/image/logo (2).png" alt="#">
       <span>Eat Fresh, Live Well, Shop Well</span>
     </div>
-    <div class="search">
-      <a>
-        <i class="ri-search-2-line"></i>  
-        <input type="text" class="text" placeholder="Discover your preferred goods">
-      </a>
+    <div>
+      <Search @input="handleSearch" />
+      <div class="results">
+        <div v-for="(product, index) in filteredProducts" :key="index" class="product-card">
+          <img :src="product.img" :alt="product.title" />
+          <div class="details">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price }} - ${{ product.priceInt }}</p>
+            <p>{{ product.category }}</p>
+          </div>
+          <div class="addCartSearch">
+            <button @click="showProductDetail(product.id)">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="isVisible" class="popup-overlay" @click="toggleVisible">
+        <div class="popup-content" @click.stop>
+          <ProductDetail 
+            :productId="productId"
+            :title="title"
+            :price="price"
+            :des="des"
+            :dePrice="dePrice"
+            />
+          <button class="close-btn" @click="toggleVisible">
+            <i class="ri-arrow-left-line"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
-
+  
   <section class="about padding">
     <div class="foodAbout">
       <img src="@/assets/image/about.png" alt="#">
@@ -99,6 +124,7 @@
     <Product
       v-for="(product, index) in displayedProducts"
       :key="index"
+      :productId="product.id"
       :title="product.title"
       :img="product.img"
       :price="product.price"
@@ -150,6 +176,9 @@ import Service from '@/components/Service.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
 import AddToCart from '@/components/ProductDetail.vue';
+import Search from '@/components/Search.vue';
+import ProductDetail from '@/components/ProductDetail.vue';
+import testingCart from '@/components/testingCart.vue';
 
 import '@/components/styling/Home.css'
 export default{
@@ -161,7 +190,10 @@ export default{
     Comment,
     Newsletter,
     Footer,
-    AddToCart
+    AddToCart,
+    Search,
+    ProductDetail,
+    testingCart,
   },
   data(){
     return{
@@ -178,15 +210,33 @@ export default{
       filteredProducts: [],
       displayedProducts: [],
       selectedCategory: "All",
+      searchQuery: "",
+      isVisible: false,
 
+      //handle product inf needed
+      productId: null,
+      title: null,
+      price: null,
+      dePrice: null,
+      des: null,
     }
+  },
+  computed:{
+    filteredProducts() {
+      if (!this.searchQuery) {
+        return [];
+      }
+      return this.products.filter((product) =>
+        product.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
   },
   async created(){
     await this.loadProducts();
     this.filteredProducts = this.allProducts;
     this.updateDisplayProducts();
   },
-   methods:{
+  methods:{
     async loadProducts(){
       const fetchProducts = await new Promise((resolve) => {
         setTimeout(() => resolve(products), 1000);
@@ -205,12 +255,38 @@ export default{
     },
     toggleDisplayProduct() {
       this.showAll = !this.showAll;
-      this.updateDisplayProducts(); // Update displayed products after toggling
+      this.updateDisplayProducts();
     },
     updateDisplayProducts() {
       this.displayedProducts = this.showAll
         ? this.filteredProducts
         : this.filteredProducts.slice(0, 10);
+    },
+
+    handleSearch(query) {
+      this.searchQuery = query;
+    },
+    showProductDetail(productId) {
+      const selectProduct = this.products.find(product => product.id === productId);
+      if(selectProduct){
+        this.productId = productId;
+        this.isVisible = true;
+        this.title = selectProduct.title;
+        this.price = selectProduct.price;
+        this.dePrice = selectProduct.dePrice;
+        this.des = selectProduct.des;
+      }
+    },
+
+    toggleVisible() {
+      this.isVisible = !this.isVisible;
+      if (!this.isVisible) {
+        this.productId = null;
+        this.title = null;
+        this.price = null;
+        this.des = null;
+        this.dePrice = null;
+      }
     },
   },
 };
