@@ -45,6 +45,13 @@
               required
             />
           </div>
+          
+          <div class="form-group"> 
+            <label for="confirmPassword"> 
+              <i class="fas fa-lock"></i> 
+            </label> 
+            <input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Confirm Password" required /> 
+          </div>
   
           <!-- Terms and Conditions Checkbox -->
       <div class="terms-container">
@@ -81,6 +88,8 @@
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
+        acceptedTerms: false,
       };
     },
     methods: {
@@ -89,6 +98,13 @@
           alert("Passwords do not match!");
           return;
         }
+
+        localStorage.setItem("userName", this.name);
+        localStorage.setItem("userEmail", this.email);
+        localStorage.setItem("userPassword", this.password);
+
+        this.$router.push({ name: 'signin'})
+        
         console.log("Full Name:", this.name);
         console.log("Email:", this.email);
         console.log("Password:", this.password);

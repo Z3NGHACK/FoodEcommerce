@@ -33,7 +33,8 @@
     
     </div>
     <p class="signup-text">
-      Doesn’t have account yet? <a href="#">Sign Up</a>
+      <!-- Doesn’t have account yet? <a href="#">Sign Up</a> -->
+      Doesn’t have account yet? <router-link to="/signup" class="signup-link">Sign Up</router-link>
     </p>
   </div>
   
@@ -49,20 +50,52 @@
   </template>
 
   <script>
+  import { useAuthStore } from '../stores/store.js';
   export default {
     data() {
       return {
         email: "",
         password: "",
+        isLogginIn: false,
       };
     },
     methods: {
       handleSignIn() {
         // Add logic for handling the sign-in
-        console.log("Email:", this.email);
-        console.log("Password:", this.password);
+        // console.log("Email:", this.email);
+        // console.log("Password:", this.password);
+        
+        // this.isLogginIn = true;
+        
+        // localStorage.setItem("isLogginIn", "true");
 
+        // const authStore = useAuthStore(); 
+        // authStore.login("Username", this.email); 
+        // this.$router.push({ name: 'home' });
+
+        const storedEmail = localStorage.getItem("userEmail");
+        const storedPassword = localStorage.getItem("userPassword");
+        const storedName = localStorage.getItem("userName");
+
+        if (this.email === storedEmail && this.password === storedPassword){
+          const authStore = useAuthStore();
+          authStore.login(storedName, this.email);
+          this.isLogginIn = true;
+          localStorage.setItem("isLogginIn", "true");
+          this.$router.push({ name: 'home' });
+        } else {
+          alert("Invalid email or password!");
+        }
       },
+    },
+    created(){
+      if(localStorage.getItem("isLogginIn") === "true"){
+        this.isLogginIn = true;
+        const authStore = useAuthStore(); 
+        const storedEmail = localStorage.getItem("userEmail");
+        const storedName = localStorage.getItem("userName");
+        authStore.login(storedName, storedEmail );
+      }
     },
   };
   </script>
@@ -182,7 +215,7 @@
 /* Sign Up Link */
 .signup-text {
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #555;
 }
 
