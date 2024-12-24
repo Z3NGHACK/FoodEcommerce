@@ -1,151 +1,241 @@
 <template>
-    <div class="img">
-        <img src="@/assets/image/apple.jpg" alt="#">
-    </div>
-    <div class="deli">
-        <i class="ri-truck-line"></i>
-        <h3>Free delivery</h3>
-    </div>
-    <div class="content">
-        <h3>Apple</h3>
-        <span>Experience the crisp and refreshing taste of fresh red apples. Grown organically in lush orchards, these apples are handpicked to ensure the best quality. With a perfect balance of sweetness and a hint of tartness, they are ideal for snacking, baking, or juicing.</span>
-        <div class="additional">
-            <h3>Additional</h3>
-            <div class="check" v-for="item in items" :key="item.id">
-                <div class="left">
-                    <input
-                        type="checkbox"
-                        :value="item"
-                        :checked="isSelected(item)"
-                        @change="selectItem(item)"
-                    />
-                    <span>{{ item.name }}</span>
-                </div>
-                <span>1kg / {{ item.price }}$</span>
+    <div class="container">
+        <div class="top_cont">
+            <div class="img">
+                <img :src="image" alt="#">
             </div>
+            <div class="detail_sect">
+                <div class="status">
+                    <div class="active_stock">
+                        <button>In Stock</button>
+                    </div>
+                    <div class="inactive_stock">
+                        <button>Out of Stock</button>
+                    </div>
+                </div>
 
-            <div class="btn">
-                <button @click="SaveItem">Save</button>
-                <button @click="clearItems">Clear</button>
+                <h2>{{ title }} {{ productId }}</h2>
+                <div class="price">
+                    <h3 class="p">
+                        {{ price }}
+                    </h3>
+                    <span>{{ dePrice }}</span>
+                </div>
+
+                <div class="about">
+                    <span>
+                        {{ des }}
+                    </span>
+                </div>
+
+                <div class="AddToCart">
+                    <div class="input_quan">
+                        <input type="number" v-model="quantity" placeholder="1">
+                    </div>
+                    <div class="addCartBtn" @click="addCart">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>Add to Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bot_cont">
+            <div class="left_btn">
+                <i class="ri-arrow-left-line"></i>
+            </div>
+            <div class="productImg">
+                <img :src="image" alt="#">
+            </div>
+            <div class="right_btn">
+                <i class="ri-arrow-right-line"></i>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { CartStore } from './data/data';
-
 export default {
+    props: {
+        price: Number,
+        dePrice: Number,
+        image: String,
+        title: String,
+        des: String,
+        productId: {
+            type: String,
+            required: true,
+        }
+    },
     data() {
         return {
-            items: [
-                { name: "Banana", price: 4, id: "F001" },
-                { name: "Mango", price: 2.6, id: "F002" },
-                { name: "Orange", price: 3, id: "F003" },
-                { name: "Grape", price: 4.1, id: "F004" },
-            ],
-            selectedItem: [], // To hold selected items locally
+            title: this.title,
+            price: this.price,
+            des: this.des,
+            productId: this.productId
         };
     },
     methods: {
-        // Handle selection and deselection of items
-        selectItem(item) {
-            const index = this.selectedItem.findIndex(i => i.id === item.id);
-            if (index === -1) {
-                // Add item if not selected
-                this.selectedItem.push(item);
-                CartStore.addToCart(item); // Add to CartStore
-            } else {
-                // Remove item if already selected
-                this.selectedItem.splice(index, 1);
-                CartStore.removeFromCart(item.id); // Remove from CartStore
-            }
-            console.log("Selected items: ", this.selectedItem);
+        addCart() {
+            const product ={
+                title: this.title,
+                price: this.price,
+                productId: this.productId
+            };
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`Added ${this.title} to the cart!`)
+            console.log(cart);
+            //localStorage.clear()
         },
-        isSelected(item) {
-            return this.selectedItem.some(i => i.id === item.id);
-        },
-        SaveItem() {
-            console.log("All selected items:", this.selectedItem);
-            this.selectedItem = []; 
-        },
-        clearItems() {
-            this.selectedItem = []; 
-            CartStore.clearCart(); 
-        },
+        mounted() { 
+        console.log("Product ID:", this.productId); // Check if the productId is passed correctly
+}
     },
 };
 </script>
 
-
 <style scoped>
-    img{
-        width: 100%;
-        margin-bottom: -8px;
-        height: 250px;
-    }
-    .deli{
-        background-color: #47B749;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        gap: 10px;
-        padding-right: 15px ;
-        color: #fff;
-        font-size: 0.8rem;
-    }
-    .deli i{
-        font-size: 1.2rem;
-    }
-    .content{
-        padding: 15px;
+    .container{
         display: flex;
         flex-direction: column;
+        width: 1000px;
+        height: auto;
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+    }
+    .top_cont{
+        display: flex;
+    }
+    .top_cont .img{
+        background-color: blue;
+        width: 50%;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+    }
+    .top_cont .img img{
+        width: 80%;
+        height: auto;
+    }
+    .detail_sect{
+        display: flex;
+        flex-direction: column;
+        padding:0 20px;
         align-items: start;
+        width: 50%;
+        margin: 0;
+        gap: 2px;
     }
-    .content h3{
-        font-weight: 700;
-        margin-bottom: 5px;
+    .detail_sect .status{
+        display: flex;
+        
+        margin: 0;
     }
-    .content span{
+    .detail_sect .active_stock button{
+        background-color: #DEF9EC;
+        border: none;
+        border-radius: 5px;
+        color: #3BB77E;
+        padding: 7px;
+        font-size: 0.5rem;
+    }
+    .detail_sect .inactive_stock button{
+        background-color: #ffdede;
+        border: none;
+        border-radius: 5px;
+        color: #cc2424;
+        padding: 7px;
+        font-size: 0.5rem;
+        text-align: start;
+    }
+    .detail_sect h2{
+        color: #000;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+    .detail_sect .price{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+    }
+    .detail_sect .price h3{
+        color: #3BB77E;
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    .detail_sect .price span{
+        margin-top: 8px;
+        color: #797979;
+        text-decoration: line-through;
+        font-size: 1.2rem
+    }
+    .detail_sect .about{
+        margin: 10px 0;
+        display: flex;
+        align-items: start;
+        height: 80px;
+        margin-bottom: 45px;
         text-align: start;
         font-size: 0.8rem;
     }
-    .content .additional{
-        border: #b8b8b8 1px solid;
-        margin: 10px 0;
-        padding: 10px;
-        border-radius: 10px;
-        width: 100%;
+    .detail_sect .AddToCart{
         display: flex;
-        flex-direction: column;
-        align-items: start;
-    }
-    .content .additional .check{
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-    .content .additional .check .left{
-        display: flex;
-        width: 90%;
         gap: 10px;
     }
-    .content .additional .check .left input:checked{
-        background-color: red;
+    .detail_sect .AddToCart .input_quan input{
+        border: 1px solid #3BB77E;
+        padding: 5px;
+        width: 50px;
+        color: #3BB77E;
+        font-size: 1rem;
+        border-radius: 3px;
+    }
+    .detail_sect .AddToCart .input_quan input::placeholder{    
+        color: #3BB77E;
+    }
+    .detail_sect .AddToCart .addCartBtn{
+        background-color: #3BB77E;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        font-size: 0.7rem;
         color: #fff;
+        border-radius: 3px;
+        transition: 0.2s ease;
+        border: 1px solid #3BB77E;
+        cursor: pointer;
     }
-    .content .additional .btn{
-        width: 100%;
-        display: flex;
-        justify-content: end;
+    .detail_sect .AddToCart .addCartBtn:hover{
+        background-color: #fff;
+        color: #3BB77E;
     }
-    .content .additional button{
+    .bot_cont{
         display: flex;
-        background-color: #47B749;
-        border: #47B749 1px solid;
-        padding: 10px 20px;
+        padding: 20px 0;
+        align-items: center;
+        gap: 10px;
+    }
+    .bot_cont .productImg{
+        width: 70px;
+        height: 70px;
         border-radius: 10px;
+        border: 1px solid #3BB77E;
+    }
+    .bot_cont .right_btn,
+    .bot_cont .left_btn{
+        background-color: green;
+        border-radius: 10px;
+        width: 40px;
+        font-size: 0.7rem;
+        padding: 5px;
         color: #fff;
     }
 </style>
