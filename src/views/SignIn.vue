@@ -1,6 +1,9 @@
 <template>
     <div class="sign-in-container">
       <!-- Left Side - Sign In Form -->
+      <div>
+      <button class="home-button" @click="home">Home</button>
+       </div>
       <div class="sign-in-left">
         <h1>Sign In</h1>
     <form @submit.prevent="handleSignIn">
@@ -11,6 +14,7 @@
           placeholder="Email"
           required
         />
+        <!-- c -->
         <span class="icon"><i class="fa fa-envelope"></i></span>
       </div>
       <div class="input-group">
@@ -20,12 +24,14 @@
           placeholder="Password"  
           required
         />
+        <!-- c -->
         <span class="icon"><i class="fa fa-lock"></i></span>
       </div>
       <a href="#" class="forgot-password">Forgot Password?</a>
       <button type="submit" class="signin-btn">Sign In</button>
     </form>
     <p class="divider">or sign in with</p>
+    <!-- c -->
     <div class="social-icons">
       <a href="#"><i class="fa fa-facebook"></i></a>
       <a href="#"><i class="fa fa-instagram"></i></a>
@@ -76,7 +82,16 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+  .home-button{
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    color: black;
+    margin: 15px;
+    padding: 2px;
+  }
   .sign-in-left {
   flex: 1;
   padding: 3rem;
