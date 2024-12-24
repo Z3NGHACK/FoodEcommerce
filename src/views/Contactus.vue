@@ -133,25 +133,31 @@ export default {
   display: inline-block;
 }
 .profile-icon {
-  width: 30px;
+  width: 30px; 
   height: 30px;
   object-fit: cover;
   border-radius: 50%;
-  background-color: #fff;
-  border: 2px solid #28af55;
+  background-color: #fff; 
+  border: 2px solid #28af55; 
   cursor: pointer;
-  background-image: url("@/assets/image/profile-icon.png");
+  background-image: url('@/assets/image/profile-icon.png');
   background-size: cover;
   background-position: center;
+  transition: transform 0.3s ease-in-out;
 }
+
+.profile-icon:hover {
+   transform: scale(1.1); 
+}
+
 .profile-menu {
   position: absolute;
   top: 35px;
   right: 0;
   background-color: white;
-  border: 1px solid #28af55;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #28af55;
+  padding: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   min-width: 250px;
   /* display: none; */
   border-radius: 15px;
@@ -163,26 +169,35 @@ export default {
   color: black;
   font-size: 0.8rem;
 }
-.profile-menu hr {
+
+.profile-menu .user-info { 
+  font-weight: 600; 
+  color: #292929; 
+}
+
+.profile-menu hr{
   margin: 10px 0;
+  border-top: 1px solid #48b61d;
 }
 .profile-menu .logout-button {
-  width: 40%;
+  width: 100%;
   margin-top: 10px;
   padding: 5px;
-  background-color: #f44336;
+  background: rgb(124, 184, 124);
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 10px;
   transition: all ease-in-out 0.3s;
+
+  font-weight:600;
+  font-size: 0.9rem;
 }
 .profile-menu .logout-button:hover {
-  background-color: #d32f2f;
-  border-radius: 10px;
-  transform: scale(1.1);
+  background-color: #018b2f;
+  transform: scale(1.05);
 }
-.profile-dropdown:hover .profile-menu {
+.profile-dropdown:hover .profile-menu{
   display: block;
 }
 </style>

@@ -414,4 +414,3 @@ export default{
   display: block;
 }
 </style>
->>>>>>> testing
