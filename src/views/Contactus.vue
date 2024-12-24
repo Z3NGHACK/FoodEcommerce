@@ -79,39 +79,11 @@ import '@/components/styling/Home.css'
 </script>
 
 <style scoped>
-/* General styles */
+
 body {
   font-family: 'Nunito Sans', sans-serif;
   color: #333;
   line-height: 1.6;
-}
-
-/* Nav Bar */
-.nav_bar {
-  display: flex;
-  background: url('/src/assets/image/top_bg.jpg') center / cover no-repeat;
-  width: 100%;
-  height: 80px;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.nav_bar img {
-  height: 40px;
-}
-
-.nav_bar nav {
-  display: flex;
-  gap: 20px;
-}
-
-.nav_bar .link {
-  text-decoration: none;
-  color: white;
 }
 
 /* Hero Section */
@@ -133,7 +105,7 @@ body {
   margin-top: 10px;
 }
 
-/* Contact Info */
+
 .contact_info {
   display: flex;
   justify-content: space-between;
@@ -166,7 +138,7 @@ body {
   border-radius: 10px;
 }
 
-/* Contact Form */
+
 .contact_form {
   background-color: #f9f9f9;
   padding: 40px;
@@ -207,7 +179,7 @@ body {
   font-weight: bold;
 }
 
-/* Footer */
+
 .footer {
   background-color: #6fbe64;
   color: white;
