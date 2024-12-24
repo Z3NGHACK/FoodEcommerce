@@ -6,11 +6,10 @@
                 <h3>
                     {{title}}
                 </h3>
-                <span>Rating {{rating }}</span>
                 <span>Category: {{category}}</span>
 
                 <span class="price">
-                    {{weightPrize }}
+                    ${{price }} / <span>500g</span>
                 </span>
             </div>
             <div class="btn">
@@ -33,7 +32,7 @@ export default {
         ProductDetail,
     },
     props:{
-        weightPrize: String,
+        price: Number,
         title: String,
         rating: Object,
         category: String,
@@ -101,6 +100,11 @@ export default {
         font-weight: 600;
         font-size: 1.2rem;
         margin: 20px 0  0 0;
+    }
+    .price span{
+        font-weight: 400;
+        color: rgb(78, 78, 78);
+        font-size: 0.9rem;
     }
     .art{
         display: flex;

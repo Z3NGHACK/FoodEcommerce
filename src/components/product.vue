@@ -4,7 +4,7 @@
         <img :src="img" alt="#" />
         <span>${{ price }} / <span class="gram">500g</span></span>
         <p class="descript">{{ des }}</p>
-        <button @click="showProductDetails">{{ button.label || 'Add to Cart' }}</button>
+        <button @click="showProductDetails">View Detail</button>
     </div>
 
     <!-- Popup -->
@@ -39,15 +39,6 @@ export default {
         price: String,
         priceint: Number,
         des: String,
-        button: {
-            type: Object,
-            required: true,
-            default: () => ({
-                id: 'button',
-                class: 'Add-to-Cart',
-                label: 'Add to Cart',
-            }),
-        },
     },
     data() {
         return {

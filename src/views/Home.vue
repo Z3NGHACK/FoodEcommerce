@@ -102,9 +102,8 @@
       v-for="(feature, index) in features"
       :key="index"
       :title="feature.title"
-      :rating="feature.rating"
       :category="feature.category"
-      :weightPrize="feature.weightPrize"
+      :price="feature.price"
       :button="feature.button"
       :img="feature.img"
     />
