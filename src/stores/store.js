@@ -1,23 +1,15 @@
-import { defineStore } from "pinia";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-export const useAuthStore = defineStore('auth',{ 
-    state: () => ({
-        isAuthenticated: false,
-        userName: '',
-        userEmail: ''
-    }),
-    actions: {
-        login(name, email){
-            this.isAuthenticated = true;
-            this.userName = name;
-            this.userEmail = email;
-        },
-        logout(){
-            this.isAuthenticated = false;
-            this.userName= '';
-            this.userEmail= '';
-            localStorage.removeItem("isLogginIn");
-        },
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    cart: [],
+  },
+  mutations: {
+    addToCart(state, product) {
+      state.cart.push(product);
     },
-
-})
+  },
+});

@@ -6,11 +6,10 @@
                 <h3>
                     {{title}}
                 </h3>
-                <span>Rating {{rating }}</span>
                 <span>Category: {{category}}</span>
 
                 <span class="price">
-                    {{weightPrize }}
+                    ${{price }} / <span>500g</span>
                 </span>
             </div>
             <div class="btn">
@@ -20,20 +19,20 @@
     </div>
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
-            <AddToCart />
+            <ProductDetail />
             <button class="close-btn" @click="toggleVisibleAddToCart"><i class="ri-arrow-left-line"></i></button>
         </div>
     </div>
     
 </template>
 <script>
-import AddToCart from './ProductDetail.vue';
+import ProductDetail from './ProductDetail.vue';
 export default {
     components:{
-        AddToCart,
+        ProductDetail,
     },
     props:{
-        weightPrize: String,
+        price: Number,
         title: String,
         rating: Object,
         category: String,
@@ -102,6 +101,11 @@ export default {
         font-size: 1.2rem;
         margin: 20px 0  0 0;
     }
+    .price span{
+        font-weight: 400;
+        color: rgb(78, 78, 78);
+        font-size: 0.9rem;
+    }
     .art{
         display: flex;
         flex-direction: column;
@@ -136,25 +140,21 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Dimmed background */
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        backdrop-filter: blur(8px); /* Blur effect */
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 1000; /* Ensure it appears above other elements */
+        z-index: 1000;
     }
-
-    /* Styles for the popup content */
     .popup-content {
-        background: #fff;
+        background-color: white;
         border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        max-width: 500px;
-        width: 100%;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
+        padding: 20px;
+        width:100%; 
+        max-width: 800px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
         display: flex;
-        flex-direction: column;
     }
 
     /* Close button styles */
@@ -162,8 +162,8 @@ export default {
         background: #fff;
         color: #000;
         border: #fff 1px solid;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         border-radius: 100%;
-        padding: 5px;
         cursor: pointer;
         position: absolute;
         top: 10px;

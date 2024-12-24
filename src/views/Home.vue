@@ -35,14 +35,39 @@
       <img src="@/assets/image/logo (2).png" alt="#">
       <span>Eat Fresh, Live Well, Shop Well</span>
     </div>
-    <div class="search">
-      <a>
-        <i class="ri-search-2-line"></i>  
-        <input type="text" class="text" placeholder="Discover your preferred goods">
-      </a>
+    <div>
+      <Search @input="handleSearch" />
+      <div class="results">
+        <div v-for="(product, index) in filteredProducts" :key="index" class="product-card">
+          <img :src="product.img" :alt="product.title" />
+          <div class="details">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price }} - ${{ product.priceInt }}</p>
+            <p>{{ product.category }}</p>
+          </div>
+          <div class="addCartSearch">
+            <button @click="showProductDetail(product.id)">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="isVisible" class="popup-overlay" @click="toggleVisible">
+        <div class="popup-content" @click.stop>
+          <ProductDetail 
+            :productId="productId"
+            :title="title"
+            :price="price"
+            :des="des"
+            :dePrice="dePrice"
+            />
+          <button class="close-btn" @click="toggleVisible">
+            <i class="ri-arrow-left-line"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
-
+  
   <section class="about padding">
     <div class="foodAbout">
       <img src="@/assets/image/about.png" alt="#">
@@ -87,9 +112,8 @@
       v-for="(feature, index) in features"
       :key="index"
       :title="feature.title"
-      :rating="feature.rating"
       :category="feature.category"
-      :weightPrize="feature.weightPrize"
+      :price="feature.price"
       :button="feature.button"
       :img="feature.img"
     />
@@ -109,6 +133,7 @@
     <Product
       v-for="(product, index) in displayedProducts"
       :key="index"
+      :productId="product.id"
       :title="product.title"
       :img="product.img"
       :price="product.price"
@@ -160,9 +185,11 @@ import Service from '@/components/Service.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
 import AddToCart from '@/components/ProductDetail.vue';
-import  {useAuthStore} from '../stores/store.js';
+import Search from '@/components/Search.vue';
+import ProductDetail from '@/components/ProductDetail.vue';
+import testingCart from '@/components/testingCart.vue';
+import  {useAuthStore} from '../stores/authStore.js';
 import { ref, onMounted, onUnmounted } from 'vue';
-
 
 import '@/components/styling/Home.css'
 export default{
@@ -172,12 +199,10 @@ export default{
       authStore.logout();
       localStorage.removeItem("isLogginIn");
     };
-
     const isProfileMenuVisible = ref(false);
     const toggleProfileMenu = () => {
       isProfileMenuVisible.value = !isProfileMenuVisible.value;
     };
-
     const handleClickOutside = (event) => {
       const profileIcon = document.querySelector('.profile-icon');
       const profileMenu = document.querySelector('.profile-menu');
@@ -194,7 +219,6 @@ export default{
     onMounted(() => {
       document.addEventListener('click', handleClickOutside);
     });
-
     onUnmounted(() => {
       document.removeEventListener('click', handleClickOutside);
     });
@@ -214,7 +238,10 @@ export default{
     Comment,
     Newsletter,
     Footer,
-    AddToCart
+    AddToCart,
+    Search,
+    ProductDetail,
+    testingCart,
   },
   data(){
     return{
@@ -231,15 +258,33 @@ export default{
       filteredProducts: [],
       displayedProducts: [],
       selectedCategory: "All",
+      searchQuery: "",
+      isVisible: false,
 
+      //handle product inf needed
+      productId: null,
+      title: null,
+      price: null,
+      dePrice: null,
+      des: null,
     }
+  },
+  computed:{
+    filteredProducts() {
+      if (!this.searchQuery) {
+        return [];
+      }
+      return this.products.filter((product) =>
+        product.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
   },
   async created(){
     await this.loadProducts();
     this.filteredProducts = this.allProducts;
     this.updateDisplayProducts();
   },
-   methods:{
+  methods:{
     async loadProducts(){
       const fetchProducts = await new Promise((resolve) => {
         setTimeout(() => resolve(products), 1000);
@@ -258,24 +303,48 @@ export default{
     },
     toggleDisplayProduct() {
       this.showAll = !this.showAll;
-      this.updateDisplayProducts(); // Update displayed products after toggling
+      this.updateDisplayProducts();
     },
     updateDisplayProducts() {
       this.displayedProducts = this.showAll
         ? this.filteredProducts
         : this.filteredProducts.slice(0, 10);
     },
+
+    handleSearch(query) {
+      this.searchQuery = query;
+    },
+    showProductDetail(productId) {
+      const selectProduct = this.products.find(product => product.id === productId);
+      if(selectProduct){
+        this.productId = productId;
+        this.isVisible = true;
+        this.title = selectProduct.title;
+        this.price = selectProduct.price;
+        this.dePrice = selectProduct.dePrice;
+        this.des = selectProduct.des;
+      }
+    },
+
+    toggleVisible() {
+      this.isVisible = !this.isVisible;
+      if (!this.isVisible) {
+        this.productId = null;
+        this.title = null;
+        this.price = null;
+        this.des = null;
+        this.dePrice = null;
+      }
+    },
   },
 };
 </script>
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 .profile-dropdown {
   position: relative;
   display: inline-block;
 }
-
 .profile-icon {
   width: 30px; 
   height: 30px;
@@ -287,6 +356,11 @@ export default{
   background-image: url('@/assets/image/profile-icon.png');
   background-size: cover;
   background-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-icon:hover {
+   transform: scale(1.1); 
 }
 
 .profile-menu {
@@ -294,15 +368,14 @@ export default{
   top: 35px;
   right: 0;
   background-color: white;
-  border: 1px solid #28af55;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #28af55;
+  padding: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   min-width: 250px;
   /* display: none; */
   border-radius: 15px;
   font-family: "Poppins", serif;
 }
-
 .profile-menu p {
   margin: 0;
   font-weight: bold;
@@ -310,29 +383,35 @@ export default{
   font-size: 0.8rem;
 }
 
-.profile-menu hr{
-  margin: 10px 0;
+.profile-menu .user-info { 
+  font-weight: 600; 
+  color: #292929; 
 }
 
+.profile-menu hr{
+  margin: 10px 0;
+  border-top: 1px solid #48b61d;
+}
 .profile-menu .logout-button {
-  width: 40%;
+  width: 100%;
   margin-top: 10px;
   padding: 5px;
-  background-color: #f44336;
+  background: rgb(124, 184, 124);
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 10px;
   transition: all ease-in-out 0.3s;
-}
 
+  font-weight:600;
+  font-size: 0.9rem;
+}
 .profile-menu .logout-button:hover {
-  background-color: #d32f2f;
-  border-radius: 10px;
-  transform: scale(1.1);
+  background-color: #018b2f;
+  transform: scale(1.05);
 }
-
-.profile-dropdown:hover .profile-menu {
+.profile-dropdown:hover .profile-menu{
   display: block;
 }
 </style>
+>>>>>>> testing
