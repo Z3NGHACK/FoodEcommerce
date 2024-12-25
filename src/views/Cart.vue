@@ -84,13 +84,13 @@ export default {
   data() {
     return {
       cartItems: [
-        { name: "Banana 1Kg", price: 1.25, quantity: 2, image: "banana.png" },
-        { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
-        { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
-        { name: "Blueberries 1Kg", price: 6.25, quantity: 1, image: "blueberries.png" },
-        { name: "Banana 1Kg", price: 1.25, quantity: 1, image: "banana.png" },
-        { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
-        { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
+        // { name: "Banana 1Kg", price: 1.25, quantity: 2, image: "banana.png" },
+        // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
+        // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
+        // { name: "Blueberries 1Kg", price: 6.25, quantity: 1, image: "blueberries.png" },
+        // { name: "Banana 1Kg", price: 1.25, quantity: 1, image: "banana.png" },
+        // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
+        // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
       ],
       shippingCost: 10,
     };
@@ -116,12 +116,6 @@ export default {
     removeItem(index) {
       this.cartItems.splice(index, 1);
     },
-    continueShopping() {
-      alert("Redirecting to shop...");
-    },
-    checkout() {
-      alert("Proceeding to checkout!");
-    },
   },
 };
 </script>
@@ -132,7 +126,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  gap: 20px;
+  gap: 20px; 
   padding: 20px;
   background-color: #f9f9f9;
   color: #333;

@@ -17,8 +17,10 @@
         <!-- Full Name Input -->
         <div class="form-group">
           <label for="name">
-            <i class="fas fa-user"></i>
-          </label>
+            <i class="users">
+              <img src="../assets/image/users.png" alt="users" class="users" />
+              </i>
+            </label>
           <input
             type="text"
             id="name"
@@ -31,7 +33,9 @@
         <!-- Email Input -->
         <div class="form-group">
           <label for="email">
-            <i class="fas fa-envelope"></i>
+            <i class="emaill">
+              <img src="../assets/image/email.png" alt="email" class="email" />
+              </i>
           </label>
           <input
             type="email"
@@ -45,7 +49,9 @@
         <!-- Password Input -->
         <div class="form-group">
           <label for="password">
-            <i class="fas fa-lock"></i>
+            <i class="lock">
+              <img src="../assets/image/lock.png" alt="lock" class="lock" />
+              </i>
           </label>
           <input
             type="password"
