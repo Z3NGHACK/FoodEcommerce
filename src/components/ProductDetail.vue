@@ -9,9 +9,9 @@
                     <div class="active_stock">
                         <button>In Stock</button>
                     </div>
-                    <div class="inactive_stock">
+                    <!-- <div class="inactive_stock">
                         <button>Out of Stock</button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <h2>{{ title }} {{ productId }}</h2>
@@ -36,10 +36,10 @@
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Add to Cart</span>
                     </div>
-                    <div class="addCartBtn" @click="remove">
+                    <!-- <div class="addCartBtn" @click="clear">
                         <i class="ri-shopping-cart-2-line"></i>
-                        <span>Remove</span>
-                    </div>
+                        <span>Clear</span>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -47,6 +47,12 @@
         <div class="bot_cont">
             <div class="left_btn">
                 <i class="ri-arrow-left-line"></i>
+            </div>
+            <div class="productImg">
+                <img :src="image" alt="#">
+            </div>
+            <div class="productImg">
+                <img :src="image" alt="#">
             </div>
             <div class="productImg">
                 <img :src="image" alt="#">
@@ -76,7 +82,8 @@ export default {
             title: this.title,
             price: this.price,
             des: this.des,
-            productId: this.productId
+            productId: this.productId,
+            image: this.image
         };
     },
     methods: {
@@ -92,11 +99,11 @@ export default {
             localStorage.setItem('cart', JSON.stringify(cart));
             console.log(cart);
         },
-        remove(){
-          localStorage.clear();  
+        clear(){
+            localStorage.clear();
         },
         mounted() { 
-        console.log("Product ID:", this.productId); // Check if the productId is passed correctly
+        console.log("Product ID:", this.productId); 
 }
     },
 };
@@ -236,7 +243,9 @@ export default {
     }
     .bot_cont .productImg img{
         width: 100%;
+        height: 100%;
         border-radius: 10px;
+
     }
     .bot_cont .right_btn,
     .bot_cont .left_btn{
