@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div class="bot_cont">
+        <!-- <div class="bot_cont">
             <div class="left_btn">
                 <i class="ri-arrow-left-line"></i>
             </div>
@@ -59,8 +59,8 @@
             </div>
             <div class="right_btn">
                 <i class="ri-arrow-right-line"></i>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
     </div>
 </template>
 
@@ -74,7 +74,7 @@ export default {
         des: String,
         productId: {
             type: String,
-            required: true,
+            require: true,
         }
     },
     data() {

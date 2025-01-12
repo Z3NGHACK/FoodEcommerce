@@ -1,8 +1,8 @@
 import { products } from '@/components/data/data';
 <template>
-  <h2>
+  <!-- <h2>
     Cart items
-  </h2>
+  </h2> -->
   <ul class="item">
     <li v-for="(item, index) in cart"
       :key="index">
@@ -12,6 +12,7 @@ import { products } from '@/components/data/data';
       <span class="title">
         {{ item.title }}
       </span>
+        {{ item.quatity }}
       <span>
         ${{ item.price }}
       </span>

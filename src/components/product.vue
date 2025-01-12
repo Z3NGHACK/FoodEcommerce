@@ -27,15 +27,21 @@
 
 <script>
 import ProductDetail from './ProductDetail.vue';
+import { products } from "./data/data.js";
+
 
 export default {
+
     components: {
         ProductDetail,
     },
     props: {
         productId: String,
         title: String,
-        img: String,
+        img: {
+            type: String,
+            require: true,
+        },
         price: String,
         priceint: Number,
         des: String,
@@ -43,8 +49,10 @@ export default {
     },
     data() {
         return {
+            products,
             isVisible: false,
             productDetails: {},
+           
         };
     },
     methods: {

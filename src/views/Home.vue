@@ -122,17 +122,17 @@
   </section>
 
   <div class="line"></div>
-  <h2>Our Proucts</h2>
+  <h2>Our Products</h2>
   <div class="inp padding">
     <h3>Category: </h3>
     <select v-model="selectedCategory" @change="filterProducts" class="filter">
       <option value="All">All</option>
-      <option value="fruit">Fruit</option>
-      <option value="vegetable">Vegetable</option>
-      <option value="meat">Meat</option>
+      <option value="fruit">Fruits</option>
+      <option value="vegetable">Vegetables</option>
+      <option value="meat">Meats</option>
       <option value="beverage">Beverages</option>
-      <option value="ingredient">Ingredient</option>
-      <option value="snack">Junk Food</option>
+      <option value="ingredient">Ingredients</option>
+      <option value="snack">Junk Foods</option>
     </select>
   </div>
   <section class="products">

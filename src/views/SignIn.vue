@@ -7,7 +7,7 @@
     </div>
 
     <div class="sign-in-left">
-      <h1>Sign In</h1>
+      <h1>Sign in</h1>
       <form @submit.prevent="handleSignIn">
         <div class="input-group">
           <input
@@ -133,10 +133,16 @@ export default {
   padding: 2px;
   transition: font-size 0.5s ease, padding 0.5s ease;
 }
+.forgot-password{
+  color: #47b749;
+
+}
 
 .sign-in-left {
   flex: 1;
-  padding: 3rem;
+  margin-top: 10px;
+  color: #47b749;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -179,14 +185,15 @@ export default {
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 15px;
   transition: font-size 0.5s ease, padding 0.5s ease;
 }
 
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.8rem;
   margin-bottom: 2rem;
 }
 

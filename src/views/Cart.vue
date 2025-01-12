@@ -13,11 +13,11 @@
           <span>Price</span>
           <span>Total</span>
         </div>
-        <div class="cart_contain">
+        <!-- <div class="cart_contain">
           <AddToCart/>
-        </div>
-        <!-- <div class="cart-items">
-          <div v-for="(item, index) in cartItems" :key="index" class="cart-item">
+        </div> -->
+        <div class="cart-items">
+          <div v-for="(item, index) in cart" :key="index" class="cart-item">
             <div class="product-detail">
               <img :src="item.image" alt="Product Image" class="product-image" />
               <div class="product-info">
@@ -28,13 +28,13 @@
             </div>
             <div class="quantity-control">
               <button @click="decreaseQuantity(index)" :disabled="item.quantity === 1">-</button>
-              <input type="text" v-model="item.quantity" />
+              <input type="text" v-model.number="item.quantity" min="1" @change="updateQuantity(index)" />
               <button @click="increaseQuantity(index)">+</button>
             </div>
             <span class="item-price">${{ item.price.toFixed(2) }}</span>
             <span class="item-total">${{ (item.quantity * item.price).toFixed(2) }}</span>
           </div>
-        </div> -->
+        </div>
       </div>
       <button class="continue-shopping" @click="continueShopping">← Continue Shopping</button>
     </div>
@@ -106,6 +106,7 @@
               {{ index + 1 }}
             </span>
             <span class="img">
+
               <img :src="item.image" alt="#">
             </span>
             <span class="title">
@@ -137,6 +138,8 @@
 
 <script>
 import AddToCart from '@/components/AddToCart.vue';
+import { useCartStore } from '@/stores/cart.js';
+// import CartNotification from "@/components/CartNotification.vue";
 
 export default {
   components:{
@@ -144,7 +147,7 @@ export default {
   },
   data() {
     return {
-      cartItems: [
+      // cartItems: [
         // { name: "Banana 1Kg", price: 1.25, quantity: 2, image: "banana.png" },
         // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
         // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
@@ -152,7 +155,7 @@ export default {
         // { name: "Banana 1Kg", price: 1.25, quantity: 1, image: "banana.png" },
         // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
         // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
-      ],
+      // ],
       shippingCost: 10,
       cart: [],
       totalPrice: 0,
@@ -162,8 +165,7 @@ export default {
     };
   },
   mounted(){
-    this.cart = JSON.parse(localStorage.getItem('cart')) || [];
-    this.calculateTotalPrice();
+    this.loadCart();
   },
   computed: {
     totalItems() {
@@ -181,14 +183,39 @@ export default {
     this.updateTime();
   },
   methods: {
+    loadCart() {
+      try {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+      } catch (error) {
+        console.error('Error loading cart:', error);
+        this.cart = [];
+      }
+    },
     increaseQuantity(index) {
-      this.cartItems[index].quantity++;
+      this.cart[index].quantity = (this.cart[index].quantity || 1) + 1;
+      this.updateCart();
     },
     decreaseQuantity(index) {
-      if (this.cartItems[index].quantity > 1) this.cartItems[index].quantity--;
+      if (this.cart[index].quantity > 1) {
+        this.cart[index].quantity--;
+        this.updateCart();
+      }
     },
+    updateQuantity(productId, newQuantity) {
+      const quantity = Math.max(1, Number(newQuantity) || 1);
+      const product = this.cart.find(item => item.id === productId);
+      if (product) {
+        product.quantity = quantity;
+        this.updateCart();
+        }
+        },
     removeItem(index) {
-      this.cartItems.splice(index, 1);
+      this.cart.splice(index, 1);
+      this.updateCart();
+    },
+    updateCart() {
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+      this.calculateTotalPrice();
     },
     continueShopping() {
       this.$router.push({name: "home"})
@@ -222,10 +249,14 @@ export default {
       this.currentTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     }
 
+
   },
   watch: {
-    cart(){
-      this.calculateTotalPrice();
+    cart: {
+      deep: true,
+      handerr() {
+        this.calculateTotalPrice();
+      }
     }
   }
 };
