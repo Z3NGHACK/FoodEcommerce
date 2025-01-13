@@ -1,59 +1,85 @@
 <template>
     <div class="prod">
         <h3>{{ title }}</h3>
-        <img :src="img" alt="#">
-        <span>{{ price }} / ${{ priceint }}</span>
-        <p>{{ des }}</p>
-        <button :id="button.id" @click="toggleVisibleAddToCart">{{ button.label || 'Add to Cart'}}</button>
+        <img :src="img" alt="#" />
+        <span>${{ price }} / <span class="gram">{{ amount }}</span></span>
+        <p class="descript">{{ des }}</p>
+        <button @click="showProductDetails">View Detail</button>
     </div>
 
+    <!-- Popup -->
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
-            <ProductDetail />
-            <button class="close-btn" @click="toggleVisibleAddToCart"><i class="ri-arrow-left-line"></i></button>
+            <ProductDetail 
+                :productId="productDetails.productId"
+                :title="productDetails.title"
+                :price="productDetails.price"
+                :des="productDetails.des"
+                :image="productDetails.img"
+                :amount="productDetails.amount"
+            />
+            <button class="close-btn" @click="toggleVisibleAddToCart">
+                <i class="ri-arrow-left-line"></i>
+            </button>
         </div>
     </div>
 </template>
+
 <script>
 import ProductDetail from './ProductDetail.vue';
+import { products } from "./data/data.js";
 
-    export default{
-        components:{
-            ProductDetail,
+
+export default {
+
+    components: {
+        ProductDetail,
+    },
+    props: {
+        productId: String,
+        title: String,
+        img: {
+            type: String,
+            require: true,
         },
-        props:{
-            title: String,
-            img: String,
-            price: String,
-            priceint: Number,
-            des: String,
-            button:{
-                type: Object,
-                required: true, 
-                default:()=>({
-                    id: 'button',
-                    class:'Add-to-Cart',
-                    label: 'Add to Cart'
-                })
+        price: String,
+        priceint: Number,
+        des: String,
+        amount: String
+    },
+    data() {
+        return {
+            products,
+            isVisible: false,
+            productDetails: {},
+           
+        };
+    },
+    methods: {
+        toggleVisibleAddToCart() {
+            this.isVisible = !this.isVisible;
+            if (this.isVisible) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
             }
         },
-        data(){
-            return{
-                isVisible: false
-            }
+        showProductDetails() {
+            this.productDetails = {
+                title: this.title,
+                price: this.price,
+                des: this.des,
+                img: this.img,
+                productId: this.productId,
+                amount: this.amount
+            };
+
+            this.toggleVisibleAddToCart();
         },
-        methods: {
-            toggleVisibleAddToCart() {
-                this.isVisible = !this.isVisible;
-                if(this.isVisible){
-                    document.body.style.overflow = 'hidden';
-                }else{
-                    document.body.style.overflow = 'auto';
-                }
-            }    
-        },
-    }
+    },
+};
 </script>
+
 <style scoped>
     .prod{
         display: flex;
@@ -72,8 +98,8 @@ import ProductDetail from './ProductDetail.vue';
         transition: 0.2s ease;
     }
     img{
-        width: 100%;
-        height: 150px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
     }
     span{
@@ -93,6 +119,15 @@ import ProductDetail from './ProductDetail.vue';
         border: #47B749 1px solid;
         color: #fff;
     }
+    .descript{
+        width:170px;
+        overflow: hidden;
+        height: 60px;
+    }
+    .gram{
+        font-weight: 400;
+        color: rgb(78, 78, 78) ;
+    }
 
     .popup-overlay {
         position: fixed;
@@ -100,28 +135,22 @@ import ProductDetail from './ProductDetail.vue';
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Dimmed background */
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        backdrop-filter: blur(8px); /* Blur effect */
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 1000; /* Ensure it appears above other elements */
+        z-index: 1000;
     }
-
-    /* Styles for the popup content */
     .popup-content {
-        background: #fff;
+        background-color: white;
         border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        max-width: 500px;
+        padding: 20px;
         width: 100%;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
+        max-width: 800px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
         display: flex;
-        flex-direction: column;
     }
-
-    /* Close button styles */
     .close-btn {
         background: #fff;
         color: #000;

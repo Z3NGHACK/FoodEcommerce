@@ -1,3 +1,4 @@
+
 <template>
   <section class="nav_bar">
       <img alt="Site Logo" src="@/assets/image/logo (2).png">
