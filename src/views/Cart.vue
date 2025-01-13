@@ -8,13 +8,37 @@
       </div>
       <div class="cart-table">
         <div class="cart-table-header">
-          <span>Product Detail</span>
-          <span>Quantity</span>
-          <span>Price</span>
-          <span>Total</span>
+          <span class="t1">Product Detail</span>
+          <span class="t2">Quantity</span>
+          <span class="t3">Price</span>
+          <span class="t4">Total</span>
         </div>
         <div class="cart_contain">
-          <AddToCart/>
+          <ul class="item">
+            <li v-for="(item, index) in cart" :key="index">
+              <span class="img">
+                <img :src="item.image" alt="#" />
+              </span>
+              <span class="title">
+                {{ item.title }}
+              </span>
+              
+              <span >
+                <button @click="decreaseQuantity(index)" class="inc">-</button>
+                {{ item.quantity }}
+                <button @click="increaseQuantity(index)" class="inc">+</button>
+              </span>
+              <span>
+                ${{ item.price }}
+              </span>
+              <span>
+                ${{ item.totalPrice.toFixed(2) }}
+              </span>
+              <button @click="deleteProduct(item.productId)" class="btn">
+                Delete
+              </button>
+            </li>
+          </ul>
         </div>
         <!-- <div class="cart-items">
           <div v-for="(item, index) in cartItems" :key="index" class="cart-item">
@@ -144,25 +168,16 @@ export default {
   },
   data() {
     return {
-      cartItems: [
-        // { name: "Banana 1Kg", price: 1.25, quantity: 2, image: "banana.png" },
-        // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
-        // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
-        // { name: "Blueberries 1Kg", price: 6.25, quantity: 1, image: "blueberries.png" },
-        // { name: "Banana 1Kg", price: 1.25, quantity: 1, image: "banana.png" },
-        // { name: "Kiwi 1Kg", price: 4.5, quantity: 1, image: "kiwi.png" },
-        // { name: "Orange 1Kg", price: 3.0, quantity: 1, image: "orange.png" },
-      ],
       shippingCost: 10,
       cart: [],
       totalPrice: 0,
       isVisible: false,
       payment: '',
-      currentTime: ''
+      currentTime: '',
     };
   },
   mounted(){
-    this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+    this.cart = JSON.parse(localStorage.getItem("cart")) || [];
     this.calculateTotalPrice();
   },
   computed: {
@@ -181,11 +196,26 @@ export default {
     this.updateTime();
   },
   methods: {
+    deleteProduct(productId) {
+      const updatedCart = this.cart.filter((item) => item.productId !== productId);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      this.cart = updatedCart;
+    },
     increaseQuantity(index) {
-      this.cartItems[index].quantity++;
+      this.cart[index].quantity++;
+      this.cart[index].totalPrice = this.cart[index].quantity * this.cart[index].price;
+      this.updateCartInLocalStorage();
     },
     decreaseQuantity(index) {
-      if (this.cartItems[index].quantity > 1) this.cartItems[index].quantity--;
+      if (this.cart[index].quantity > 1) {
+        this.cart[index].quantity--;
+        this.cart[index].totalPrice = this.cart[index].quantity * this.cart[index].price;
+        this.$set(this.cart, index, updatedItem);
+        this.updateCartInLocalStorage();
+      }
+    },
+    updateCartInLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     removeItem(index) {
       this.cartItems.splice(index, 1);
@@ -264,7 +294,42 @@ export default {
   font-weight: bold;
   color: black;
 }
-
+.btn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+  }
+  .btn:hover{
+    background-color: #49a34c;
+  }
+  .inc{
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 6px;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+  .inc:hover{
+    background-color: #49a34c;
+  }
+.t2{
+  position: absolute;
+  left: 440px;
+}
+.t3{
+  position: absolute;
+  left: 560px;
+}
+.t4{
+  position: absolute;
+  left: 660px;
+}
 .item-count {
   font-size: 1.5rem;
 }

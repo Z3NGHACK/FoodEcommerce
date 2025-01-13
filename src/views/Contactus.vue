@@ -117,11 +117,11 @@ export default {
       <h2>Get In Touch</h2>
       <p>Visit one of our agency locations or contact us today</p>
       <ul>
-        <li><strong>Store and Head Office:</strong></li>
-        <li>Monday to Sunday: 9am to 10pm</li>
-        <li>Email: wefresh@gmail.com</li>
-        <li>Phone: +855 012 345 678</li>
-        <li>236 st 140 Psar Jas Khan Doun Penh Phnom Penh</li>
+        <li><strong><i class="ri-store-line"></i> Store and Head Office:</strong></li>
+        <li><i class="ri-time-line"></i> Monday to Sunday: 9am to 10pm</li>
+        <li><i class="ri-mail-line"></i> Email: wefresh@gmail.com</li>
+        <li><i class="ri-phone-line"></i> Phone: +855 012 345 678</li>
+        <li><i class="ri-map-pin-line"></i> 236 st 140 Psar Jas Khan Doun Penh Phnom Penh</li>
       </ul>
     </div>
     <div class="image">
@@ -155,10 +155,11 @@ body {
 }
 .hero_section {
   text-align: center;
-  background: url('/src/assets/image/about.png') center / cover no-repeat;
+  background: url('/src/assets/image/cont.jpg') center/ cover no-repeat;
   color: white;
   padding: 60px 15px;
   font-size: 20px;
+  height: 400px
 }
 .hero_section h1 {
   font-size: 36px;

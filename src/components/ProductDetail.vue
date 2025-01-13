@@ -36,10 +36,14 @@
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Add to Cart</span>
                     </div>
-                    <!-- <div class="addCartBtn" @click="clear">
+                    <div class="addCartBtn" @click="clear">
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Clear</span>
-                    </div> -->
+                    </div>
+                    <div class="addCartBtn" @click="testquan">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>Clear</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,30 +87,43 @@ export default {
             price: this.price,
             des: this.des,
             productId: this.productId,
-            image: this.image
+            image: this.image,
+            quantity: 1, // Default quantity
         };
+    },
+    computed: {
+        totalPrice() {
+            return this.quantity * this.price; // Compute total price based on quantity and price
+        }
     },
     methods: {
         addCart() {
-            const product ={
+            console.log("Quantity:", this.quantity); // Check the quantity value
+            const product = {
                 title: this.title,
                 price: this.price,
                 productId: this.productId,
-                image: this.image
+                image: this.image,
+                quantity: this.quantity,
+                totalPrice: this.totalPrice // Use computed totalPrice
             };
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             console.log(cart);
         },
-        clear(){
+        clear() {
             localStorage.clear();
         },
-        mounted() { 
-        console.log("Product ID:", this.productId); 
-}
+        testquan() {
+            alert(this.totalPrice); // This will work correctly now
+        }
+    },
+    mounted() {
+        console.log("Product ID:", this.productId);
     },
 };
+
 </script>
 
 <style scoped>
@@ -162,7 +179,7 @@ export default {
         color: #cc2424;
         padding: 7px;
         font-size: 0.5rem;
-        text-align: start;
+        text-azlign: start;
     }
     .detail_sect h2{
         color: #000;
