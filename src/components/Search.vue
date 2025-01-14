@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     updateSearch() {
-      this.$emit("input", this.searchTerm); 
+      this.$emit("input", this.searchTerm.trim()); 
     },
   },
 };

@@ -36,7 +36,8 @@
       <span>Eat Fresh, Live Well, Shop Well</span>
     </div>
     <div>
-      <Search @input="handleSearch" />
+      <Search @input="searchQuery = $event" />
+
       <div class="results">
         <div v-for="(product, index) in filteredProducts" :key="index" class="product-card">
           <img :src="product.img" :alt="product.title" />
@@ -143,6 +144,7 @@
       :title="product.title"
       :img="product.img"
       :price="product.price"
+      :dePrice="product.dePrice"
       :priceint="product.priceInt"
       :des="product.des"
       :button="product.button"
@@ -248,14 +250,14 @@ export default{
       services,
       sellingItems,
       features,
-      products,
+      products: products,
       comments,
       showAll: false,
       allProducts: [],
       filteredProducts: [],
       displayedProducts: [],
       selectedCategory: "All",
-      searchQuery: "",
+      searchQuery: '',
       isVisible: false,
 
       productId: null,
@@ -270,8 +272,9 @@ export default{
       if (!this.searchQuery) {
         return [];
       }
-      return this.products.filter((product) =>
-        product.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      const query = this.searchQuery.toLowerCase();
+      return this.products.filter(product =>
+        product.title?.toLowerCase().includes(query)
       );
     },
   },

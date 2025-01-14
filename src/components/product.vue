@@ -2,7 +2,7 @@
     <div class="prod">
         <h3>{{ title }}</h3>
         <img :src="img" alt="#" />
-        <span>${{ price }} / <span class="gram">{{ amount }}</span></span>
+        <span>${{ price }}/ <span class="gram">{{ amount }}</span></span>
         <p class="descript">{{ des }}</p>
         <button @click="showProductDetails">View Detail</button>
     </div>
@@ -17,6 +17,7 @@
                 :des="productDetails.des"
                 :image="productDetails.img"
                 :amount="productDetails.amount"
+        	    :dePrice="productDetails.dePrice"
             />
             <button class="close-btn" @click="toggleVisibleAddToCart">
                 <i class="ri-arrow-left-line"></i>
@@ -37,6 +38,7 @@ export default {
         title: String,
         img: String,
         price: String,
+        dePrice: Number,
         priceint: Number,
         des: String,
         amount: String
@@ -63,7 +65,8 @@ export default {
                 des: this.des,
                 img: this.img,
                 productId: this.productId,
-                amount: this.amount
+                amount: this.amount,
+                dePrice: this.dePrice
             };
 
             this.toggleVisibleAddToCart();

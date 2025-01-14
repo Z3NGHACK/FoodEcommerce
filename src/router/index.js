@@ -46,11 +46,6 @@ const router = createRouter({
       component: SignIn,
     },
     {
-      path: '/addtocart',
-      name: 'AddToCart',
-      component: () => import('@/components/AddToCart.vue'), // Adjust path if needed
-    },
-    {
         path: '/productdetail',
         name: 'ProductDetail',
         component: () => import('@/components/ProductDetail.vue'), // Adjust path if needed

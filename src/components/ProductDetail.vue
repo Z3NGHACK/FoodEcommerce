@@ -17,7 +17,7 @@
                 <h2>{{ title }} {{ productId }}</h2>
                 <div class="price">
                     <h3 class="p">
-                        {{ price }}
+                        ${{ price }}
                     </h3>
                     <span>{{ dePrice }}</span>
                 </div>
@@ -88,6 +88,7 @@ export default {
             des: this.des,
             productId: this.productId,
             image: this.image,
+            dePrice: this.dePrice,
             quantity: 1, // Default quantity
         };
     },
@@ -104,6 +105,7 @@ export default {
                 price: this.price,
                 productId: this.productId,
                 image: this.image,
+                dePrice: this.dePrice,
                 quantity: this.quantity,
                 totalPrice: this.totalPrice // Use computed totalPrice
             };
