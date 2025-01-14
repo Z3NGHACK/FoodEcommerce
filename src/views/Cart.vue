@@ -22,15 +22,17 @@
                 {{ item.title }}
               </span>
               
-              <span >
+              <div class="quantity">
                 <button @click="decreaseQuantity(index)" class="inc">-</button>
-                {{ item.quantity }}
+                <span class="quan">
+                  {{ item.quantity }}
+                </span>
                 <button @click="increaseQuantity(index)" class="inc">+</button>
-              </span>
-              <span>
+              </div>
+              <span class="cart_price">
                 ${{ item.price }}
               </span>
-              <span>
+              <span class="cart_price">
                 ${{ item.totalPrice.toFixed(2) }}
               </span>
               <button @click="deleteProduct(item.productId)" class="btn">
@@ -78,7 +80,7 @@
 
       <button @click="addressbtn" class="checkout-btn">Add Address</button>
     <div v-if="isVisibleAddres" class="popup-overlay" @click="toggleAddress">
-      <div class="popup-content" @click.stop>
+      <div class="address-content" @click.stop>
         <div class="address-form-container">
           <h3 class="form-title">Add Delivery Address</h3>
           <form @submit.prevent="save_btnad">
@@ -140,7 +142,7 @@
     </div>
     
     <div v-if="isVisiblePay" class="popup-overlay" @click="closePopups">
-      <div class="popup-content" @click.stop>
+      <div class="popup-pay" @click.stop>
         <div class="payment_credit">
           <div class="head">
             Confirm Credit Card Information
@@ -148,31 +150,40 @@
           <div class="cont1">
             <div class="input">
               <h3>Owner</h3>
-              <input type="text" placeholder="Enter Name">
+              <input required type="text" placeholder="Enter Name">
             </div>
             <div class="input">
               <h3>CVV</h3>
-              <input type="text" placeholder="Enter CVV">
+              <input required type="text" placeholder="Ex: xxx">
             </div>
           </div>
           <div class="input">
             <h3>Credit Number</h3>
-            <input type="text" placeholder="Enter Credit Number">
+            <input required type="text" placeholder="Ex: 123 456 789 012">
           </div>
           <div class="typeCardNExp">
             <div>
-              Expiration Date
-              <input type="text" placeholder="mm/DD">
+              <h3>
+                Expiration Date
+              </h3>
+              <input required type="date" placeholder="mm/DD">
             </div>
             <div class="card">
               <img src="../assets/image/card.png" alt="Credit-Card" class="payment-card"/>
             </div>
           </div>
-          <button class="checkout-button" @click="checkout">payment</button>
+          <button class="pay-btn" @click="checkout">payment</button>
         </div>
       </div>
     </div>
 
+    <div v-if="isVisiblety" class="popup-overlay" @click="thankyou">
+      <div class="thank-content" @click.stop>
+        <img src="../assets/image/tic.webp" alt="#">
+        <h3>Thank you for your order!</h3>
+        <h3>You have successfully checkout</h3>
+      </div>
+    </div>
     
     <div v-if="isVisible" class="popup-overlay" @click="closePopups">
       <div class="popup-content" @click.stop>
@@ -188,7 +199,7 @@
         <div class="date des">
           <span>{{ currentTime }}</span>
         </div>
-        <div class="pay">
+        <div>
           <span>
             Pay with: {{payment}}
           </span>
@@ -229,6 +240,7 @@
           </div>
           <div class="total">Total Cost: <span class="price"> ${{ totalCost.toFixed(2) }}</span></div>
         </div>
+        <button class="done_btn" @click="thank">Done</button>
       </div>
     </div>
   </div>
@@ -249,6 +261,7 @@ export default {
       currentTime: '',
       isVisiblePay: false, 
       isVisibleAddres: false,
+      isVisiblety: false,
       address: {
         fullName: '',
         streetAddress: '',
@@ -318,6 +331,13 @@ export default {
     },
     toggleAddress(){
       this.isVisibleAddres = !this.isVisibleAddres;
+    },
+    thankyou(){
+      this.isVisiblety = !this.isVisiblety;
+    },
+    thank(){
+      this.isVisiblety = true;
+      this.isVisible = false;
     },
     addressbtn(){
       this.isVisibleAddres = true;
@@ -463,14 +483,57 @@ export default {
   font-size: 1rem;
   font-weight: 700;
   color: #45a049;
+  margin-bottom: 10px;
+}
+.thank-content{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 25%;
+    max-width: 800px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    height: 50%;
+}
+.thank-content h3{
+  font-weight: 600;
+}
+.thank-content img{
+  width: 120px;
+  height: 120px;
+}
+.popup-pay {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 20px;
+    width: 25%;
+    max-width: 800px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    position: relative;
 }
 .payment_credit{
   display: flex;
   flex-direction: column;
 }
+.payment_credit h3{
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-top: 10px;
+}
 .payment_credit input{
   padding: 5px 20px;
   width: 100%;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+.payment_credit .cont1{
+  display: flex;
 }
 .payment_credit .typeCardNExp{
   display: flex;
@@ -486,7 +549,38 @@ export default {
   height: 50px;
   align-items: end;
 }
-.submit-button:hover {
+.pay-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.done_btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  padding: 8px;
+  background: #4caf50;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+button:hover {
   background-color: #45a049;
 }
 .cart {
@@ -497,6 +591,20 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   min-width: 600px;
   box-sizing: border-box;
+}
+
+.address-content {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 20px;
+    width: 25%;
+    max-width: 800px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+}
+.address-content input{
+  width: 100%;
 }
 
 .cart-header {
@@ -511,29 +619,40 @@ export default {
   color: black;
 }
 .btn{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-  }
-  .btn:hover{
-    background-color: #49a34c;
-  }
-  .inc{
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 8px 6px;
-    border-radius: 5px;
-    margin: 0 5px;
-  }
-  .inc:hover{
-    background-color: #49a34c;
-  }
+  position: absolute;
+  right: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+}
+.btn:hover{
+  background-color: #49a34c;
+}
+.quantity{
+  display: flex;
+}
+.quan{
+  width: 20px;
+  text-align: center;
+  align-content: center;
+}
+.cart_price{
+  width: 50px;
+  align-content: center;
+}
+.inc{
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  width: 25px;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+.inc:hover{
+  background-color: #49a34c;
+}
 .t2{
   position: absolute;
   left: 440px;
@@ -610,9 +729,6 @@ export default {
 .address{
   padding: 10px 0;
   font-size: 0.8rem;
-}
-.pay{
-  padding: 5px 0;
 }
 .item{
   padding: 0 10px;
@@ -790,7 +906,6 @@ export default {
   align-items: center;
   gap: 5px;
 }
-
 .payment {
   width: 40px;
   height: 40px;
@@ -822,6 +937,7 @@ export default {
   cursor: pointer;
   text-align: center;
 }
+
 .save-btn {
   width: 100%;
   padding: 12px;
@@ -855,8 +971,8 @@ li{
   font-size: 0.8rem;
 }
 img{
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 25px;
 }
 .title{
   text-align: start;
@@ -866,6 +982,7 @@ img{
   padding: 20px 0;
   font-size: 1.4rem;
 }
+
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -883,11 +1000,13 @@ img{
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px;
-    width: 25%;
+    width: 30%;
     max-width: 800px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
+    height: 90%;
+    position: relative;
 }
 .close-btn {
     background: #fff;
