@@ -40,25 +40,6 @@
             </li>
           </ul>
         </div>
-        <!-- <div class="cart-items">
-          <div v-for="(item, index) in cartItems" :key="index" class="cart-item">
-            <div class="product-detail">
-              <img :src="item.image" alt="Product Image" class="product-image" />
-              <div class="product-info">
-                <p class="product-title">Organic Fruit</p>
-                <p class="product-description">{{ item.name }}</p>
-                <button class="remove-button" @click="removeItem(index)">Remove</button>
-              </div>
-            </div>
-            <div class="quantity-control">
-              <button @click="decreaseQuantity(index)" :disabled="item.quantity === 1">-</button>
-              <input type="text" v-model="item.quantity" />
-              <button @click="increaseQuantity(index)">+</button>
-            </div>
-            <span class="item-price">${{ item.price.toFixed(2) }}</span>
-            <span class="item-total">${{ (item.quantity * item.price).toFixed(2) }}</span>
-          </div>
-        </div> -->
       </div>
       <button class="continue-shopping" @click="continueShopping">← Continue Shopping</button>
     </div>
@@ -96,15 +77,107 @@
           </span>
         </div>
       </div>
+
+      <button @click="addressbtn" class="checkout-btn">Add Address</button>
+    <div v-if="isVisibleAddres" class="popup-overlay" @click="toggleAddress">
+      <div class="popup-content" @click.stop>
+        <div class="address-form-container">
+          <h3 class="form-title">Add Delivery Address</h3>
+          <form @submit.prevent="save_btnad">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                v-model="address.fullName"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="streetAddress">Street Address</label>
+              <input
+                type="text"
+                id="streetAddress"
+                v-model="address.streetAddress"
+                placeholder="123 Main St"
+                required
+              />
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="city">City or province</label>
+                <input
+                  type="text"
+                  id="city"
+                  v-model="address.city"
+                  placeholder="City"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                v-model="address.phoneNumber"
+                placeholder="123-456-7890"
+                required
+              />
+            </div>
+            <button type="submit" class="save-btn">Save Address</button>
+          </form>
+        </div>
+      </div>
+    </div>
+      
+
       <hr class="divider" />
       <div class="summary-total">
         <span>Total Cost:</span>
         <span>${{ totalCost.toFixed(2) }}</span>
       </div>
-      <button class="checkout-button" @click="checkout">Checkout</button>
+      <!-- <button class="checkout-button" @click="paymentCheckout">Checkout</button> -->
+      <button class="checkout-button" @click="checkPayment">Checkout</button>
     </div>
     
-    <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleRecipt">
+    <div v-if="isVisiblePay" class="popup-overlay" @click="closePopups">
+      <div class="popup-content" @click.stop>
+        <div class="payment_credit">
+          <div class="head">
+            Confirm Credit Card Information
+          </div>
+          <div class="cont1">
+            <div class="input">
+              <h3>Owner</h3>
+              <input type="text" placeholder="Enter Name">
+            </div>
+            <div class="input">
+              <h3>CVV</h3>
+              <input type="text" placeholder="Enter CVV">
+            </div>
+          </div>
+          <div class="input">
+            <h3>Credit Number</h3>
+            <input type="text" placeholder="Enter Credit Number">
+          </div>
+          <div class="typeCardNExp">
+            <div>
+              Expiration Date
+              <input type="text" placeholder="mm/DD">
+            </div>
+            <div class="card">
+              <img src="../assets/image/card.png" alt="Credit-Card" class="payment-card"/>
+            </div>
+          </div>
+          <button class="checkout-button" @click="checkout">payment</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div v-if="isVisible" class="popup-overlay" @click="closePopups">
       <div class="popup-content" @click.stop>
         <div class="logo des">
           <img src="../assets/image/logo (2).png" alt="#">
@@ -121,6 +194,11 @@
         <div class="pay">
           <span>
             Pay with: {{payment}}
+          </span>
+        </div>
+        <div>
+          <span>
+            Address: {{ address.streetAddress }}
           </span>
         </div>
         <ul class="item">
@@ -174,6 +252,14 @@ export default {
       isVisible: false,
       payment: '',
       currentTime: '',
+      isVisiblePay: false, 
+      isVisibleAddres: false,
+      address: {
+        fullName: '',
+        streetAddress: '',
+        city: '',
+        phoneNumber: '',
+      },
     };
   },
   mounted(){
@@ -231,14 +317,82 @@ export default {
         return acc + item.price * quantity;
       }, 0);
     },
+    toggleVisibleCreditCard(){
+      this.isVisiblePay = !this.isVisiblePay;
+    },  
     toggleVisibleRecipt(){
       this.isVisible = !this.isVisible;
     },
+    toggleAddress(){
+      this.isVisibleAddres = !this.isVisibleAddres;
+    },
+    addressbtn(){
+      this.isVisibleAddres = true;
+    },
+    closePopups(){
+      this.isVisiblePay = false;
+      this.isVisible = false;
+    },
     checkout(){
-      this.toggleVisibleRecipt();
+      this.isVisiblePay = false;
+      this.isVisible = true;
+    },
+    paymentCheckout(){
+      this.isVisiblePay = true;
+    },
+    checkPayment(){
+      if(this.payment === "cash" ){
+        this.isVisible = true;
+        this.isVisiblePay = false;
+      }else{
+        this.isVisible = false;
+        this.isVisiblePay = true;
+      }
     },
     throwRadio(payment){
       this.payment = payment;
+    },
+    save_btnad() {
+      this.address.streetAddress;
+      alert(this.address.streetAddress); // Access address from the component's data
+    },
+
+
+    // closeAddressPopup() {
+    //   this.showAddressPopup = false;
+    //   this.resetAddressForm();
+    // },
+    // // Save the entered address
+    // saveLocalAddress() {
+    //   if (this.address.area === '') {
+    //     alert('Please select a delivery area.');
+    //     return;
+    //   }
+    //   console.log('Address Saved:', this.address);
+    //   alert(Delivery address saved for ${this.address.area}.);
+    //   this.closeAddressPopup();
+    // },
+    // // Reset the form fields
+    // resetAddressForm() {
+    //   this.address = {
+    //     name: '',
+    //     area: '',
+    //     phone: '',
+    //   };
+    // },
+
+    submitAddress() {
+      console.log('Address submitted:', this.address);
+      alert('Address saved successfully!');
+      this.resetAddressForm();
+    },
+    resetAddressForm() {
+      this.address = {
+        fullName: '',
+        streetAddress: '',
+        city: '',
+        phoneNumber: '',
+      };
     },
     updateTime() {
       const now = new Date();
@@ -272,7 +426,102 @@ export default {
   color: #333;
   box-sizing: border-box;
 }
+.address-form-container {
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #fdfdfd;
+  font-family: Arial, sans-serif;
+}
 
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.payment_credit .head{
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #45a049;
+}
+.payment_credit{
+  display: flex;
+  flex-direction: column;
+}
+.payment_credit h3{
+}
+.payment_credit input{
+  padding: 5px 20px;
+  width: 100%;
+}
+.payment_credit .typeCardNExp{
+  display: flex;
+  align-items: center;
+}
+.payment_credit .typeCardNExp input{
+  width: 80%;
+}
+.payment_credit .typeCardNExp .card{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  align-items: end;
+}
+.submit-button:hover {
+  background-color: #45a049;
+}
 .cart {
   flex: 2;
   background: #fff;
@@ -595,7 +844,28 @@ export default {
   text-align: center;
   margin-top: 220px;
 }
-
+.checkout-btn {
+  width: 30%;
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
 .checkout-button:hover {
   background: #45a049;
 }
