@@ -1,8 +1,8 @@
 <template>
     <div class="prod">
-        <h3>{{ title }} {{ productId }}</h3>
+        <h3>{{ title }}</h3>
         <img :src="img" alt="#" />
-        <span>${{ price }} / <span class="gram">500g</span></span>
+        <span>${{ price }} / <span class="gram">{{ amount }}</span></span>
         <p class="descript">{{ des }}</p>
         <button @click="showProductDetails">View Detail</button>
     </div>
@@ -10,13 +10,13 @@
     <!-- Popup -->
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
-            <!-- Pass product-specific data dynamically -->
             <ProductDetail 
                 :productId="productDetails.productId"
                 :title="productDetails.title"
                 :price="productDetails.price"
                 :des="productDetails.des"
-                :img="productDetails.img"
+                :image="productDetails.img"
+                :amount="productDetails.amount"
             />
             <button class="close-btn" @click="toggleVisibleAddToCart">
                 <i class="ri-arrow-left-line"></i>
@@ -39,11 +39,12 @@ export default {
         price: String,
         priceint: Number,
         des: String,
+        amount: String
     },
     data() {
         return {
             isVisible: false,
-            productDetails: {}, // Hold data for the selected product
+            productDetails: {},
         };
     },
     methods: {
@@ -56,16 +57,15 @@ export default {
             }
         },
         showProductDetails() {
-            // Simulate getting product data (could be from props or API)
             this.productDetails = {
                 title: this.title,
                 price: this.price,
                 des: this.des,
                 img: this.img,
-                productId: this.productId
+                productId: this.productId,
+                amount: this.amount
             };
 
-            // Toggle the popup
             this.toggleVisibleAddToCart();
         },
     },

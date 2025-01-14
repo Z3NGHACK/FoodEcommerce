@@ -13,14 +13,22 @@
                 </span>
             </div>
             <div class="btn">
-                <button :id="button.id" @click="toggleVisibleAddToCart">{{ button.label || 'Add to Cart'}}</button>
+                <button @click="showProductDetails">Views Detail</button>
             </div>
         </div>
     </div>
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
-            <ProductDetail />
-            <button class="close-btn" @click="toggleVisibleAddToCart"><i class="ri-arrow-left-line"></i></button>
+            <ProductDetail 
+                :productId="productDetails.productId"
+                :title="productDetails.title"
+                :price="productDetails.price"
+                :des="productDetails.des"
+                :image="productDetails.img"
+            />
+            <button class="close-btn" @click="toggleVisibleAddToCart">
+                <i class="ri-arrow-left-line"></i>
+            </button>
         </div>
     </div>
     
@@ -31,25 +39,19 @@ export default {
     components:{
         ProductDetail,
     },
-    props:{
-        price: Number,
+    props: {
+        productId: String,
         title: String,
-        rating: Object,
-        category: String,
         img: String,
-        button:{
-            type: Object,
-            required: true, 
-            default:()=>({
-                id: 'button',
-                class: 'add-to-cart-button',
-                label: 'Add to Cart'
-            })
-        }
+        price: String,
+        priceint: Number,
+        des: String,
+        category: String
     },
     data(){
             return{
-                isVisible: false
+                isVisible: false,
+                productDetails: {},
             }
         },
     methods: {
@@ -60,6 +62,18 @@ export default {
             }else{
                 document.body.style.overflow = 'auto';
             }
+            console.log(this.productDetails);
+        },
+        showProductDetails() {
+            this.productDetails = {
+                title: this.title,
+                price: this.price,
+                des: this.des,
+                img: this.img,
+                productId: this.productId
+            };
+
+            this.toggleVisibleAddToCart();
         },
         display(){
             console.log("show");
@@ -90,7 +104,6 @@ export default {
     img{
         width: 100%;
         height: 180px;
-        background-color: red;
         border-radius: 10px;
     }
     h3{
@@ -140,8 +153,8 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-        backdrop-filter: blur(8px); /* Blur effect */
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -157,7 +170,6 @@ export default {
         display: flex;
     }
 
-    /* Close button styles */
     .close-btn {
         background: #fff;
         color: #000;
@@ -176,3 +188,73 @@ export default {
         border: #47B749 1px solid;
     }
 </style>
+
+<!-- <template>
+    <div class="prod">
+        <h3>{{ title }} {{ productId }}</h3>
+        <img :src="img" alt="#" />
+        <span>${{ price }} / <span class="gram">500g</span></span>
+        <p class="descript">{{ des }}</p>
+        <button @click="showProductDetails">View Detail</button>
+    </div>
+
+    <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
+        <div class="popup-content" @click.stop>
+            <ProductDetail 
+                :productId="productDetails.productId"
+                :title="productDetails.title"
+                :price="productDetails.price"
+                :des="productDetails.des"
+                :image="productDetails.img"
+            />
+            <button class="close-btn" @click="toggleVisibleAddToCart">
+                <i class="ri-arrow-left-line"></i>
+            </button>
+        </div>
+    </div>
+</template> -->
+
+<!-- <script>
+import ProductDetail from './ProductDetail.vue';
+
+export default {
+    components: {
+        ProductDetail,
+    },
+    props: {
+        productId: String,
+        title: String,
+        img: String,
+        price: String,
+        priceint: Number,
+        des: String,
+    },
+    data() {
+        return {
+            isVisible: false,
+            productDetails: {},
+        };
+    },
+    methods: {
+        toggleVisibleAddToCart() {
+            this.isVisible = !this.isVisible;
+            if (this.isVisible) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        },
+        showProductDetails() {
+            this.productDetails = {
+                title: this.title,
+                price: this.price,
+                des: this.des,
+                img: this.img,
+                productId: this.productId
+            };
+
+            this.toggleVisibleAddToCart();
+        },
+    },
+};
+</script> -->

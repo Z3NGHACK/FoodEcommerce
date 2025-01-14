@@ -1,133 +1,68 @@
-<template>
-  <div class="sign-up-container">
-    <div class="home">
-      <button class="home-button" @click="home">Home</button>
-    </div>
-
-    <div class="sign-up-left">
-      <h1 class="create-account">Create Account</h1>
-      <img src="../assets/image/user.png" alt="user" class="user-icon" />
-      <p class="signup-option">You can sign up with</p>
-      <div class="social-icons">
-        <img src="../assets/image/fb.png" alt="Facebook" class="social-icon" />
-        <img src="../assets/image/ig.png" alt="Instagram" class="social-icon" />
-        <img src="../assets/image/x.png" alt="X" class="social-icon" />
-      </div>
-      <form @submit.prevent="handleSignUp">
-        <div class="form-group">
-          <label for="name">
-            <i class="users">
-              <img src="../assets/image/users.png" alt="users" class="users icon" />
-            </i>
-          </label>
-          <input
-            type="text"
-            id="name"
-            v-model="name"
-            placeholder="Full Name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">
-            <i class="emaill">
-              <img src="../assets/image/email.png" alt="email" class="email icon" />
-            </i>
-          </label>
-          <input
-            type="email"
-            id="email"
-            v-model="email"
-            placeholder="Email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">
-            <i class="lock">
-              <img src="../assets/image/lock.png" alt="lock" class="lock icon" />
-            </i>
-          </label>
-          <input
-            type="password"
-            id="password"
-            v-model="password"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">
-            <i class="lock">
-              <img src="../assets/image/lock.png" alt="lock" class="lock icon" />
-            </i>
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            v-model="confirmPassword"
-            placeholder="Confirm Password"
-            required
-          />
-        </div>
-        <div class="terms-container">
-          <input type="checkbox" id="terms" v-model="acceptedTerms" />
-          <label for="terms">I accept all the terms and conditions</label>
-        </div>
-
-        <div class="signin-container">
-          Already have an account? <router-link to="/signin" class="signin-link">Sign In</router-link>
-        </div>
-
-        <button type="submit" class="sign-up-button">Sign Up</button>
-      </form>
-    </div>
-
-    <div class="sign-up-right">
-      <h1>Welcome!</h1>
-      <h1 class="brand-name">WeFresh</h1>
-      <p class="tagline">Eat Fresh, Live Fresh, Shop Well</p>
-      <p class="description">
-        Start your journey to healthier living with us.<br />
-        Sign up to unlock fresh, organic choices for a better you!
-      </p>
-      <p>Join our community for exclusive access to sustainable, wholesome food</p>
-    </div>
-  </div>
-</template>
-
 <script>
+import { useAuthStore } from "../stores/authStore.js";
+import { ref, onMounted, onUnmounted } from "vue";
+import Footer from "@/components/Footer.vue";
+
 export default {
-  data() {
-    return {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      acceptedTerms: false,
-    };
+  components: {
+    Footer
   },
-  methods: {
-    home() {
-      this.$router.push({ name: "home" });
-    },
-    handleSignUp() {
-      if (!this.acceptedTerms) {
-        alert("Please accept the terms and conditions!");
-        return;
-      }
-      if (this.password !== this.confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
+  setup() {
+    const authStore = useAuthStore();
+    const isNavbarVisible = ref(false);
 
-      localStorage.setItem("userName", this.name);
-      localStorage.setItem("userEmail", this.email);
-      localStorage.setItem("userPassword", this.password);
 
-      alert("Account created successfully!");
-      this.$router.push({ name: "signin" });
-    },
+    const toggleNavbar = () => {
+      isNavbarVisible.value = !isNavbarVisible.value;
+    };
+    const logout = () => {
+      authStore.logout();
+      localStorage.removeItem("isLogginIn");
+    };
+
+    const isProfileMenuVisible = ref(false);
+    const toggleProfileMenu = () => {
+      isProfileMenuVisible.value = !isProfileMenuVisible.value;
+    };
+
+    const handleClickOutside = (event) => {
+      const profileIcon = document.querySelector(".profile-icon");
+      const profileMenu = document.querySelector(".profile-menu");
+      if (
+        profileMenu &&
+        profileIcon &&
+        !profileMenu.contains(event.target) &&
+        !profileIcon.contains(event.target)
+      ) {
+        isProfileMenuVisible.value = false;
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener("click", handleClickOutside);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener("click", handleClickOutside);
+    });
+
+    return { 
+    authStore, 
+    logout, 
+    isProfileMenuVisible, 
+    toggleProfileMenu, 
+    isNavbarVisible, 
+    toggleNavbar
+  };
+  },
+  created() {
+    const authStore = useAuthStore();
+    if (localStorage.getItem("isLogginIn") === "true") {
+      this.isLogginIn = true;
+      const storedName = localStorage.getItem("userName");
+      const storedEmail = localStorage.getItem("userEmail");
+      authStore.login(storedName, storedEmail);
+    }
   },
 };
 </script>
@@ -218,239 +153,257 @@ body {
 }
 .hero_section {
   text-align: center;
-  background: url('/src/assets/image/about.png') center / cover no-repeat;
+  background: url('/src/assets/image/cont.jpg') center/ cover no-repeat;
   color: white;
   padding: 60px 15px;
   font-size: 20px;
+  height: 400px
 }
-
-.home-button {
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  background-color: #fff;
-  cursor: pointer;
-  color: #47b749;
-  padding: 5px 10px;
-  border-radius: 5px;
+.hero_section h1 {
+  font-size: 36px;
+  font-weight: 700;
 }
-
-.sign-up-left,
-.sign-up-right {
-  flex: 1;
+.hero_section p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.contact_info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 40px 15px;
+  font-size: 16px;
 }
-
-.sign-up-left {
-  background-color: #ffffff;
-  border-right: 2px solid #f1f1f1;
+.contact_info .info {
+  margin-bottom: 20px;
+  text-align: center;
+  padding-left: 50px;
 }
-
-.sign-up-left h1 {
-  color: #27ae60;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+.contact_info .info h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.contact_info ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+.contact_info .image img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+.contact_form {
+  background-color: #f9f9f9;
+  padding: 40px 15px;
   text-align: center;
 }
-
-.user-icon {
-  width: 50px;
-  margin-bottom: 1rem;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.social-icon {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
-}
-
-.form-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  border: 1px solid #47b749;
-  padding: 0.75rem;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.form-group input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 1rem;
-  margin-left: 5px;
-}
-
-.terms-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.sign-up-button {
-  width: 100%;
-  max-width: 400px;
-  padding: 0.75rem;
-  background-color: #47b749;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.sign-up-button:hover {
-  background-color: #1e8449;
-}
-
-.signin-container {
-  margin-top: 1rem;
-  color: #555;
-}
-
-.signin-link {
-  color: #27ae60;
-  text-decoration: none;
+.contact_form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
   font-weight: 600;
 }
-
-.signin-link:hover {
-  text-decoration: underline;
+.contact_form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
 }
-
-.sign-up-right {
-  background: #6fd696;
+.contact_form input,
+.contact_form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.contact_form button {
+  background-color: #47B749;
   color: white;
-  text-align: center;
-}
-
-.sign-up-right h1,
-.brand-name {
-  font-size: 2rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
-  font-family: Pacifico;
+}
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #28af55;
+  cursor: pointer;
+  background-image: url('@/assets/image/profile-icon.png');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+.profile-menu {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: white;
+  border: 2px solid #28af55;
+  padding: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  border-radius: 15px;
+  font-family: "Poppins", serif;
+}
+.profile-menu p {
+  margin: 0;
+  font-weight: bold;
+  color: black;
+  font-size: 0.8rem;
+}
+.profile-menu .logout-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+  background: rgb(124, 184, 124);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all ease-in-out 0.3s;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.profile-menu .logout-button:hover {
+  background-color: #018b2f;
+  transform: scale(1.05);
+}
+.nav_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
 }
 
-.tagline {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  font-family: Pacifico;
-}
-
-.description {
+nav .close{
+  position: absolute;
+  right: 10%;
+  bottom: 20px;
+  color: #47B749;
   font-size: 1rem;
-  margin-bottom: 1rem;
+  cursor: pointer;
+  border: 1px solid #47B749;
+  padding: 2px 15px;
+  border-radius: 10px;
+  display: none;
+}
+
+.hamburger-btn {
+  position: absolute;
+  right: 50px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #47B749;
+  display: none;
+}
+.hamburger-btn i{
+  position: absolute;
+  z-index: 1000;
 }
 
 @media screen and (max-width: 1024px) {
-  .sign-up-container {
-    flex-direction: column;
+  .contact_container{
     max-width: 1024px;
   }
-
-  .sign-up-left,
-  .sign-up-right {
-    flex: unset;
-    width: 100%;
-    border-right: none;
-  }
-
-  .sign-up-left {
-    border-bottom: 2px solid #f1f1f1;
-  }
-
-  .sign-up-right {
-    padding: 1.5rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .sign-up-container {
+  nav {
+    position: fixed;
+    top: 0;
+    padding: 20px;
+    right: 0;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0 0 0 10px;
+    width: 15%;
     flex-direction: column;
-    max-width: 768px;
-
-  }
-  .sign-up-left h1 {
-    font-size: 1.5rem;
-  }
-
-  .form-group {
-    max-width: 100%;
-  }
-
-  .sign-up-button {
-    max-width: 100%;
+    justify-content: start;
+    transform: translateX(100%);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    height: 30%;
+    gap: 0;
+    z-index: 10;
+    transition: 0.2s ease;
   }
 
-  .sign-up-right h1,
-  .brand-name {
-    font-size: 1.5rem;
+  nav.is-visible {
+    transform: translateX(0);
   }
 
-  .tagline {
-    font-size: 1rem;
+  .hamburger-btn {
+    display: block;
+    color: #47B749
+  }
+  .hamburger-btn i{
+    z-index: 100;
+  }
+  nav .close{
+    display: block;
+  }
+  nav .close:hover{
+    background-color:#47B749 ;
+    color: #fff;
+  }
+  nav span{
+    padding: 5px;
+    display: flex;
+  }
+  nav span:hover{
+    background-color: #28af55;
+  }
+}
+@media (min-width: 768px) {
+  .contact_info {
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  .description {
-    font-size: 0.9rem;
+  .contact_info .info {
+    text-align: left;
+    margin-right: 20px;
+  }
+
+  .contact_info .image {
+    margin-left: 20px;
+  }
+
+  .hero_section {
+    padding: 80px 40px;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .home-button {
-    font-size: 0.9rem;
-    padding: 5px;
+@media (min-width: 1024px) {
+  .hero_section h1 {
+    font-size: 48px;
   }
 
-  .user-icon {
-    width: 40px;
+  .hero_section p {
+    font-size: 22px;
   }
 
-  .social-icon {
-    width: 30px;
-    height: 30px;
+  .contact_form h2 {
+    font-size: 28px;
   }
 
-  .sign-up-left h1 {
-    font-size: 1.2rem;
+  .contact_form button {
+    font-size: 18px;
   }
 
-  .form-group {
-    padding: 0.5rem;
-  }
-
-  .sign-up-right h1,
-  .brand-name {
-    font-size: 1.2rem;
-  }
-
-  .tagline {
-    font-size: 0.8rem;
-  }
-
-  .description {
-    font-size: 0.8rem;
+  .contact_info ul {
+    font-size: 18px;
   }
 }
 </style>

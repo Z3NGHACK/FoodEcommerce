@@ -9,9 +9,9 @@
                     <div class="active_stock">
                         <button>In Stock</button>
                     </div>
-                    <div class="inactive_stock">
+                    <!-- <div class="inactive_stock">
                         <button>Out of Stock</button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <h2>{{ title }} {{ productId }}</h2>
@@ -51,6 +51,12 @@
         <div class="bot_cont">
             <div class="left_btn">
                 <i class="ri-arrow-left-line"></i>
+            </div>
+            <div class="productImg">
+                <img :src="image" alt="#">
+            </div>
+            <div class="productImg">
+                <img :src="image" alt="#">
             </div>
             <div class="productImg">
                 <img :src="image" alt="#">
@@ -104,7 +110,6 @@ export default {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`Added ${this.title} to the cart!`)
             console.log(cart);
         },
         clear() {
@@ -133,7 +138,6 @@ export default {
         display: flex;
     }
     .top_cont .img{
-        background-color: blue;
         width: 50%;
         height: 300px;
         display: flex;
@@ -252,6 +256,12 @@ export default {
         height: 70px;
         border-radius: 10px;
         border: 1px solid #3BB77E;
+    }
+    .bot_cont .productImg img{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+
     }
     .bot_cont .right_btn,
     .bot_cont .left_btn{

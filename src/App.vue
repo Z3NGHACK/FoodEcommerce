@@ -11,8 +11,7 @@ import { RouterLink, RouterView } from 'vue-router';
   <div class="container">
     <header>
     </header>
-    <RouterView 
-    />
+    <RouterView />
   </div>
 </template>
 
@@ -51,5 +50,9 @@ import { RouterLink, RouterView } from 'vue-router';
     transition: width 0.3s ease; /* Smooth transition effect */
   }
 
-
+  @media screen and (max-width: 1024px) {
+  .container{
+    max-width: 1024px;
+  }
+  }
 </style>

@@ -238,11 +238,9 @@
 </template>
 
 <script>
-import AddToCart from '@/components/AddToCart.vue';
 
 export default {
   components:{
-    AddToCart
   },
   data() {
     return {

@@ -240,13 +240,15 @@ h2{
 }
 
 .results {
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     margin-left: 115px;
     margin-top: -20px;
     width: 270px;
     border-radius: 0 0 5px 5px;
+    height: 350px;
+    overflow: hidden;
+    color: #fff;
 }
 .product-card {
     display: flex;
@@ -329,4 +331,11 @@ h2{
     background-color: #47B749;
     color: #fff;
     border: #47B749 1px solid;
+}
+.test{
+    background-color: red;
+    position: absolute;
+    top: 10px;
+    left: 500px;
+    cursor: pointer;
 }

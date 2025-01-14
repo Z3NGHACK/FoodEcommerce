@@ -59,6 +59,7 @@
             :price="price"
             :des="des"
             :dePrice="dePrice"
+            :image="image"
             />
           <button class="close-btn" @click="toggleVisible">
             <i class="ri-arrow-left-line"></i>
@@ -116,6 +117,7 @@
       :price="feature.price"
       :button="feature.button"
       :img="feature.img"
+      :des="feature.des"
     />
   </section>
 
@@ -127,6 +129,10 @@
       <option value="All">All</option>
       <option value="fruit">Fruit</option>
       <option value="vegetable">Vegetable</option>
+      <option value="meat">Meat</option>
+      <option value="beverage">Beverages</option>
+      <option value="ingredient">Ingredient</option>
+      <option value="snack">Junk Food</option>
     </select>
   </div>
   <section class="products">
@@ -140,6 +146,7 @@
       :priceint="product.priceInt"
       :des="product.des"
       :button="product.button"
+      :amount="product.amount"
     />
   </section>
   <div class="explore" @click="toggleDisplayProduct">
@@ -238,11 +245,8 @@ export default{
   },
   data(){
     return{
-      //description need to be change
       services,
-      //description need to be change
       sellingItems,
-      //description need to be change
       features,
       products,
       comments,
@@ -254,7 +258,6 @@ export default{
       searchQuery: "",
       isVisible: false,
 
-      //handle product inf needed
       productId: null,
       title: null,
       price: null,
@@ -280,7 +283,7 @@ export default{
   methods:{
     async loadProducts(){
       const fetchProducts = await new Promise((resolve) => {
-        setTimeout(() => resolve(products), 1000);
+        setTimeout(() => resolve(products), 2000);
       });
       this.allProducts = fetchProducts;
     },
@@ -316,6 +319,7 @@ export default{
         this.price = selectProduct.price;
         this.dePrice = selectProduct.dePrice;
         this.des = selectProduct.des;
+        this.image = selectProduct.img
       }
     },
 
