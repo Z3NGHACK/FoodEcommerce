@@ -123,7 +123,7 @@
   </section>
 
   <div class="line"></div>
-  <h2>Our Proucts</h2>
+  <h2>Our Products</h2>
   <div class="inp padding">
     <h3>Category: </h3>
     <select v-model="selectedCategory" @change="filterProducts" class="filter">
