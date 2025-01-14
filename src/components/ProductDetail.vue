@@ -36,14 +36,14 @@
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Add to Cart</span>
                     </div>
-                    <div class="addCartBtn" @click="clear">
+                    <!-- <div class="addCartBtn" @click="clear">
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Clear</span>
                     </div>
                     <div class="addCartBtn" @click="testquan">
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Clear</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -116,14 +116,13 @@ export default {
             localStorage.clear();
         },
         testquan() {
-            alert(this.totalPrice); // This will work correctly now
+            alert(this.totalPrice);
         }
     },
     mounted() {
         console.log("Product ID:", this.productId);
     },
 };
-
 </script>
 
 <style scoped>
