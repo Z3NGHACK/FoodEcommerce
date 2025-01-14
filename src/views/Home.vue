@@ -164,11 +164,6 @@
     />
   </section>
 
-  <div class="line"></div>
-  <section class="newsletter">
-    <Newsletter/>
-  </section>
-
   <footer>
     <Footer/>
   </footer>
@@ -182,7 +177,6 @@ import Feature from '@/components/Feature.vue';
 import Product from '@/components/product.vue';
 import SellingItem from '@/components/SellingItem.vue';
 import Service from '@/components/Service.vue';
-import Newsletter from '../components/Newsletter.vue';
 import Footer from '@/components/Footer.vue';
 import AddToCart from '@/components/ProductDetail.vue';
 import Search from '@/components/Search.vue';
@@ -236,7 +230,6 @@ export default{
     Feature,
     Product,
     Comment,
-    Newsletter,
     Footer,
     AddToCart,
     Search,

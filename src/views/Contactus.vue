@@ -1,298 +1,383 @@
+<template>
+  <div class="sign-up-container">
+    <div class="home">
+      <button class="home-button" @click="home">Home</button>
+    </div>
+
+    <div class="sign-up-left">
+      <h1 class="create-account">Create Account</h1>
+      <img src="../assets/image/user.png" alt="user" class="user-icon" />
+      <p class="signup-option">You can sign up with</p>
+      <div class="social-icons">
+        <img src="../assets/image/fb.png" alt="Facebook" class="social-icon" />
+        <img src="../assets/image/ig.png" alt="Instagram" class="social-icon" />
+        <img src="../assets/image/x.png" alt="X" class="social-icon" />
+      </div>
+      <form @submit.prevent="handleSignUp">
+        <div class="form-group">
+          <label for="name">
+            <i class="users">
+              <img src="../assets/image/users.png" alt="users" class="users icon" />
+            </i>
+          </label>
+          <input
+            type="text"
+            id="name"
+            v-model="name"
+            placeholder="Full Name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">
+            <i class="emaill">
+              <img src="../assets/image/email.png" alt="email" class="email icon" />
+            </i>
+          </label>
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">
+            <i class="lock">
+              <img src="../assets/image/lock.png" alt="lock" class="lock icon" />
+            </i>
+          </label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">
+            <i class="lock">
+              <img src="../assets/image/lock.png" alt="lock" class="lock icon" />
+            </i>
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            v-model="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+        <div class="terms-container">
+          <input type="checkbox" id="terms" v-model="acceptedTerms" />
+          <label for="terms">I accept all the terms and conditions</label>
+        </div>
+
+        <div class="signin-container">
+          Already have an account? <router-link to="/signin" class="signin-link">Sign In</router-link>
+        </div>
+
+        <button type="submit" class="sign-up-button">Sign Up</button>
+      </form>
+    </div>
+
+    <div class="sign-up-right">
+      <h1>Welcome!</h1>
+      <h1 class="brand-name">WeFresh</h1>
+      <p class="tagline">Eat Fresh, Live Fresh, Shop Well</p>
+      <p class="description">
+        Start your journey to healthier living with us.<br />
+        Sign up to unlock fresh, organic choices for a better you!
+      </p>
+      <p>Join our community for exclusive access to sustainable, wholesome food</p>
+    </div>
+  </div>
+</template>
+
 <script>
-import AddToCart from "@/components/AddToCart.vue";
-import { useAuthStore } from "../stores/authStore.js";
-import { ref, onMounted, onUnmounted } from "vue";
-import Footer from "@/components/Footer.vue";
-
 export default {
-  components: {
-    AddToCart,
-    Footer
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      acceptedTerms: false,
+    };
   },
-  setup() {
-    const authStore = useAuthStore();
-    const logout = () => {
-      authStore.logout();
-      localStorage.removeItem("isLogginIn");
-    };
-
-    const isProfileMenuVisible = ref(false);
-    const toggleProfileMenu = () => {
-      isProfileMenuVisible.value = !isProfileMenuVisible.value;
-    };
-
-    const handleClickOutside = (event) => {
-      const profileIcon = document.querySelector(".profile-icon");
-      const profileMenu = document.querySelector(".profile-menu");
-      if (
-        profileMenu &&
-        profileIcon &&
-        !profileMenu.contains(event.target) &&
-        !profileIcon.contains(event.target)
-      ) {
-        isProfileMenuVisible.value = false;
+  methods: {
+    home() {
+      this.$router.push({ name: "home" });
+    },
+    handleSignUp() {
+      if (!this.acceptedTerms) {
+        alert("Please accept the terms and conditions!");
+        return;
       }
-    };
+      if (this.password !== this.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
 
-    onMounted(() => {
-      document.addEventListener("click", handleClickOutside);
-    });
+      localStorage.setItem("userName", this.name);
+      localStorage.setItem("userEmail", this.email);
+      localStorage.setItem("userPassword", this.password);
 
-    onUnmounted(() => {
-      document.removeEventListener("click", handleClickOutside);
-    });
-
-    return { authStore, logout, isProfileMenuVisible, toggleProfileMenu };
-  },
-  created() {
-    const authStore = useAuthStore();
-    if (localStorage.getItem("isLogginIn") === "true") {
-      this.isLogginIn = true;
-      const storedName = localStorage.getItem("userName");
-      const storedEmail = localStorage.getItem("userEmail");
-      authStore.login(storedName, storedEmail);
-    }
+      alert("Account created successfully!");
+      this.$router.push({ name: "signin" });
+    },
   },
 };
 </script>
 
-<template>
-  <section class="nav_bar">
-      <img alt="Site Logo" src="@/assets/image/logo (2).png">
-      <nav>
-        <span>
-          <RouterLink class="link" active-class="active" to="/">Home</RouterLink></span>
-        <span>
-          <RouterLink class="link" active-class="active" to="/contact">Contact</RouterLink></span>
-        <span v-if="!authStore.isAuthenticated">
-          <RouterLink class="link" active-class="active" to="/signup">Sign Up</RouterLink></span>
-        <span v-if="!authStore.isAuthenticated">
-          <RouterLink class="link" active-class="active" to="/signin">Sign In</RouterLink></span>
-        <span v-if="authStore.isAuthenticated">
-          <RouterLink class="link" active-class="active" to="/cart">
-            <i class="ri-shopping-cart-2-line"></i>
-          </RouterLink>
-        </span>
-        <span v-if="authStore.isAuthenticated" class="profile-dropdown">
-          <div class="profile-icon" @click="toggleProfileMenu"></div> <div v-if="isProfileMenuVisible" class="profile-menu">
-            <p>Username: <span class="user-info">{{ authStore.userName }}</span></p>
-            <p>Email: <span class="user-info">{{ authStore.userEmail }}</span></p>
-            <hr>
-            <button @click="logout" class="logout-button">
-              <i class="ri-logout-circle-r-line"></i> Logout
-          </button>
-        </div>
-      </span>
-      </nav>
-  </section>
-  <header class="hero_section">
-    <h1>#Let's Talk</h1>
-    <p>We love to hear from you</p>
-  </header>
-
-  <section class="contact_info">
-    <div class="info">
-      <h2>Get In Touch</h2>
-      <p>Visit one of our agency locations or contact us today</p>
-      <ul>
-        <li><strong>Store and Head Office:</strong></li>
-        <li>Monday to Sunday: 9am to 10pm</li>
-        <li>Email: wefresh@gmail.com</li>
-        <li>Phone: +855 012 345 678</li>
-        <li>236 st 140 Psar Jas Khan Doun Penh Phnom Penh</li>
-      </ul>
-    </div>
-    <div class="image">
-      <img src="@/assets/image/comment_app.png" alt="App Screens">
-    </div>
-  </section>
-  <section class="contact_form">
-    <h2>Leave a Message</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="E-mail" required />
-      <input type="text" placeholder="Subject" />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </section>
-
-  <Footer/>
-  
-</template>
-
 <style scoped>
-
-body {
-  font-family: 'Nunito Sans', sans-serif;
-  color: #333;
-  line-height: 1.6;
-}
-
-/* Hero Section */
-.hero_section {
-  text-align: center;
-  background: url('/src/assets/image/about.png') center / cover no-repeat;
-  color: white;
-  padding: 60px 0;
-  font-size: 20px;
-}
-
-.hero_section h1 {
-  font-size: 36px;
-  font-weight: 700;
-}
-
-.hero_section p {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
-
-.contact_info {
+.sign-up-container {
   display: flex;
-  justify-content: space-between;
-  padding: 40px;
-  font-size: 16px;
-}
-
-.contact_info .info h2 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.brand-name {
-  font-weight: bold;
-  font-size: 1.5rem;
-  font-family: Pacifico;
-  
-}
-.contact_info ul {
-  list-style: none;
-  padding: 0;
-}
-
-.contact_info li {
-  margin-bottom: 8px;
-}
-
-.contact_info .image img {
-  max-width: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: 0.2s ease;
 }
 
+.home {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
 
-.contact_form {
-  background-color: #f9f9f9;
-  padding: 40px;
+.home-button {
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  color: #47b749;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.sign-up-left,
+.sign-up-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.sign-up-left {
+  background-color: #ffffff;
+  border-right: 2px solid #f1f1f1;
+}
+
+.sign-up-left h1 {
+  color: #27ae60;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
   text-align: center;
 }
 
-.contact_form h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
+.user-icon {
+  width: 50px;
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border: 1px solid #47b749;
+  padding: 0.75rem;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+  margin-left: 5px;
+}
+
+.terms-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sign-up-button {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem;
+  background-color: #47b749;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sign-up-button:hover {
+  background-color: #1e8449;
+}
+
+.signin-container {
+  margin-top: 1rem;
+  color: #555;
+}
+
+.signin-link {
+  color: #27ae60;
+  text-decoration: none;
   font-weight: 600;
 }
 
-.contact_form form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 500px;
-  margin: 0 auto;
+.signin-link:hover {
+  text-decoration: underline;
 }
 
-.contact_form input,
-.contact_form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.contact_form button {
-  background-color: #6fbe64;
+.sign-up-right {
+  background: #6fd696;
   color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+  text-align: center;
+}
+
+.sign-up-right h1,
+.brand-name {
+  font-size: 2rem;
   font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: Pacifico;
 }
 
-.profile-dropdown {
-  position: relative;
-  display: inline-block;
-}
-.profile-icon {
-  width: 30px; 
-  height: 30px;
-  object-fit: cover;
-  border-radius: 50%;
-  background-color: #fff; 
-  border: 2px solid #28af55; 
-  cursor: pointer;
-  background-image: url('@/assets/image/profile-icon.png');
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.3s ease-in-out;
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-family: Pacifico;
 }
 
-.profile-icon:hover {
-   transform: scale(1.1); 
+.description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
-.profile-menu {
-  position: absolute;
-  top: 35px;
-  right: 0;
-  background-color: white;
-  border: 2px solid #28af55;
-  padding: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  min-width: 250px;
-  /* display: none; */
-  border-radius: 15px;
-  font-family: "Poppins", serif;
-}
-.profile-menu p {
-  margin: 0;
-  font-weight: bold;
-  color: black;
-  font-size: 0.8rem;
+@media screen and (max-width: 1024px) {
+  .sign-up-container {
+    flex-direction: column;
+    max-width: 1024px;
+  }
+
+  .sign-up-left,
+  .sign-up-right {
+    flex: unset;
+    width: 100%;
+    border-right: none;
+  }
+
+  .sign-up-left {
+    border-bottom: 2px solid #f1f1f1;
+  }
+
+  .sign-up-right {
+    padding: 1.5rem;
+  }
 }
 
-.profile-menu .user-info { 
-  font-weight: 600; 
-  color: #292929; 
+@media screen and (max-width: 768px) {
+  .sign-up-container {
+    flex-direction: column;
+    max-width: 768px;
+
+  }
+  .sign-up-left h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-group {
+    max-width: 100%;
+  }
+
+  .sign-up-button {
+    max-width: 100%;
+  }
+
+  .sign-up-right h1,
+  .brand-name {
+    font-size: 1.5rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
 }
 
-.profile-menu hr{
-  margin: 10px 0;
-  border-top: 1px solid #48b61d;
-}
-.profile-menu .logout-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 5px;
-  background: rgb(124, 184, 124);
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-  transition: all ease-in-out 0.3s;
+@media screen and (max-width: 480px) {
+  .home-button {
+    font-size: 0.9rem;
+    padding: 5px;
+  }
 
-  font-weight:600;
-  font-size: 0.9rem;
-}
-.profile-menu .logout-button:hover {
-  background-color: #018b2f;
-  transform: scale(1.05);
-}
-.profile-dropdown:hover .profile-menu{
-  display: block;
-}
+  .user-icon {
+    width: 40px;
+  }
 
+  .social-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .sign-up-left h1 {
+    font-size: 1.2rem;
+  }
+
+  .form-group {
+    padding: 0.5rem;
+  }
+
+  .sign-up-right h1,
+  .brand-name {
+    font-size: 1.2rem;
+  }
+
+  .tagline {
+    font-size: 0.8rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+  }
+}
 </style>

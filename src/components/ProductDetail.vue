@@ -36,6 +36,14 @@
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Add to Cart</span>
                     </div>
+                    <!-- <div class="addCartBtn" @click="clear">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>Clear</span>
+                    </div>
+                    <div class="addCartBtn" @click="testquan">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>Clear</span>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -72,25 +80,35 @@ export default {
             title: this.title,
             price: this.price,
             des: this.des,
-            productId: this.productId
+            productId: this.productId,
+            image: this.image
         };
+    },
+    computed: {
+        totalPrice() {
+            return this.quantity * this.price; // Compute total price based on quantity and price
+        }
     },
     methods: {
         addCart() {
-            const product ={
+            console.log("Quantity:", this.quantity); // Check the quantity value
+            const product = {
                 title: this.title,
                 price: this.price,
-                productId: this.productId
+                productId: this.productId,
+                image: this.image
             };
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             alert(`Added ${this.title} to the cart!`)
             console.log(cart);
-            //localStorage.clear()
+        },
+        clear(){
+            localStorage.clear();
         },
         mounted() { 
-        console.log("Product ID:", this.productId); // Check if the productId is passed correctly
+        console.log("Product ID:", this.productId); 
 }
     },
 };
@@ -150,7 +168,7 @@ export default {
         color: #cc2424;
         padding: 7px;
         font-size: 0.5rem;
-        text-align: start;
+        text-azlign: start;
     }
     .detail_sect h2{
         color: #000;
