@@ -81,7 +81,8 @@ export default {
             price: this.price,
             des: this.des,
             productId: this.productId,
-            image: this.image
+            image: this.image,
+            quantity: 1, // Default quantity
         };
     },
     computed: {
@@ -96,7 +97,9 @@ export default {
                 title: this.title,
                 price: this.price,
                 productId: this.productId,
-                image: this.image
+                image: this.image,
+                quantity: this.quantity,
+                totalPrice: this.totalPrice // Use computed totalPrice
             };
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
@@ -104,12 +107,15 @@ export default {
             alert(`Added ${this.title} to the cart!`)
             console.log(cart);
         },
-        clear(){
+        clear() {
             localStorage.clear();
         },
-        mounted() { 
-        console.log("Product ID:", this.productId); 
-}
+        testquan() {
+            alert(this.totalPrice);
+        }
+    },
+    mounted() {
+        console.log("Product ID:", this.productId);
     },
 };
 </script>

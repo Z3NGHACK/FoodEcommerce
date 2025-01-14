@@ -27,24 +27,41 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        cart: [],
-      };
+export default {
+  data() {
+    return {
+      cart: [],
+    };
+  },
+  mounted() {
+    this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+  },
+  methods: {
+    deleteProduct(productId) {
+      const updatedCart = this.cart.filter((item) => item.productId !== productId);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      this.cart = updatedCart;
     },
-    mounted() {
-      this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+    increaseQuantity(index) {
+      this.cart[index].quantity++;
+      this.cart[index].totalPrice = this.cart[index].quantity * this.cart[index].price;
+      this.updateCartInLocalStorage();
     },
-    methods: {
-      deleteProduct(productId) {
-        const updatedCart = this.cart.filter(item => item.productId !== productId);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        this.cart = updatedCart;
-      },
+    decreaseQuantity(index) {
+      if (this.cart[index].quantity > 1) {
+        this.cart[index].quantity--;
+        this.cart[index].totalPrice = this.cart[index].quantity * this.cart[index].price;
+        this.$set(this.cart, index, updatedItem);
+        this.updateCartInLocalStorage();
+      }
     },
-  };
+    updateCartInLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
+  },
+};
 </script>
+
 
 <style scoped>
   .item{
@@ -66,7 +83,7 @@
     padding: 10px 0;
     padding-bottom: 20px;
   }
-  button{
+  .btn{
     position: absolute;
     right: 10px;
     top: 10px;
@@ -76,7 +93,18 @@
     padding: 8px 20px;
     border-radius: 5px;
   }
-  button:hover{
+  .btn:hover{
+    background-color: #49a34c;
+  }
+  .inc{
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 6px;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+  .inc:hover{
     background-color: #49a34c;
   }
   span{

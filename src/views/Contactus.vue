@@ -132,23 +132,96 @@ export default {
 };
 </script>
 
-<style scoped>
-.sign-up-container {
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: 0.2s ease;
-}
+<template>
+  <div class="contact_container">
+    <section class="nav_bar">
+      <img alt="Site Logo" src="@/assets/image/logo (2).png">
+      <button class="hamburger-btn" @click="toggleNavbar">
+        <i v-if="!isNavbarVisible" class="ri-menu-line"></i>
+      </button>
+      <nav :class="{ 'is-visible': isNavbarVisible }"  @click="toggleNavbar">
+        <i v-if="isNavbarVisible" class="ri-arrow-left-line close"></i>
+        <span>
+          <RouterLink class="link" active-class="active" to="/">Home</RouterLink>
+        </span>
+        <span>
+          <RouterLink class="link" active-class="active" to="/contact">Contact</RouterLink>
+        </span>
+        <span v-if="!authStore.isAuthenticated">
+          <RouterLink class="link" active-class="active" to="/signup">Sign Up</RouterLink>
+        </span>
+        <span v-if="!authStore.isAuthenticated">
+          <RouterLink class="link" active-class="active" to="/signin">Sign In</RouterLink>
+        </span>
+        <span v-if="authStore.isAuthenticated">
+          <RouterLink class="link" active-class="active" to="/cart">
+            <i class="ri-shopping-cart-2-line"></i>
+          </RouterLink>
+        </span>
+        <span v-if="authStore.isAuthenticated" class="profile-dropdown">
+          <div class="profile-icon" @click="toggleProfileMenu"></div> <div v-if="isProfileMenuVisible" class="profile-menu">
+            <p>Username: <span class="user-info">{{ authStore.userName }}</span></p>
+            <p>Email: <span class="user-info">{{ authStore.userEmail }}</span></p>
+            <hr>
+            <button @click="logout" class="logout-button">
+              <i class="ri-logout-circle-r-line"></i> Logout
+            </button>
+          </div>
+        </span>
+      </nav>
+  </section>
+  <header class="hero_section">
+    <h1>#Let's Talk</h1>
+    <p>We love to hear from you</p>
+  </header>
 
-.home {
-  position: absolute;
-  top: 15px;
-  left: 15px;
+  <section class="contact_info">
+    <div class="info">
+      <h2>Get In Touch</h2>
+      <p>Visit one of our agency locations or contact us today</p>
+      <ul>
+        <li><strong><i class="ri-store-line"></i> Store and Head Office:</strong></li>
+        <li><i class="ri-time-line"></i> Monday to Sunday: 9am to 10pm</li>
+        <li><i class="ri-mail-line"></i> Email: wefresh@gmail.com</li>
+        <li><i class="ri-phone-line"></i> Phone: +855 012 345 678</li>
+        <li><i class="ri-map-pin-line"></i> 236 st 140 Psar Jas Khan Doun Penh Phnom Penh</li>
+      </ul>
+    </div>
+    <div class="image">
+      <img src="@/assets/image/comment_app.png" alt="App Screens">
+    </div>
+  </section>
+  <section class="contact_form">
+    <h2>Leave a Message</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="E-mail" required />
+      <input type="text" placeholder="Subject" />
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <Footer/>
+  </div>
+
+  
+</template>
+
+<style scoped>
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+.hero_section {
+  text-align: center;
+  background: url('/src/assets/image/about.png') center / cover no-repeat;
+  color: white;
+  padding: 60px 15px;
+  font-size: 20px;
 }
 
 .home-button {
