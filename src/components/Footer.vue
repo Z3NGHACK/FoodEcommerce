@@ -1,7 +1,6 @@
 <template>
   <footer class="footer">
     <div class="footer-container">
-      <!-- Logo and Navigation Links -->
       <div class="footer-section logo-links">
         <h1 class="logo">We<span>Fresh</span></h1>
         <ul class="footer-links">
@@ -15,14 +14,12 @@
         </ul>
       </div>
 
-      <!-- Contact Info -->
       <div class="footer-section contact-info">
         <p>For any help, please contact us</p>
         <p class="phone">+855 012 345 678</p>
         <p class="email"><a href="mailto:www.wefresh@gmail.com">www.wefresh@gmail.com</a></p>
       </div>
 
-      <!-- App Store Links -->
       <div class="footer-section app-links">
         <h2>Get the App</h2>
         <div class="app-buttons">
@@ -32,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Social Media Links -->
     <div class="footer-social">
       <a href="#"><i class="fab fa-facebook-f"></i></a>
       <a href="#"><i class="fab fa-instagram"></i></a>

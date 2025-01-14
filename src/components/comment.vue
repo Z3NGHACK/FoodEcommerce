@@ -2,7 +2,6 @@
   <div class="customer-reviews">
     <h1>Customer Reviews</h1>
 
-    <!-- Summary Section -->
     <div class="summary">
       <div class="summary-item total-reviews">
         <h2>Total Reviews</h2>
@@ -28,7 +27,6 @@
       </div>
     </div>
 
-    <!-- Featured Review Section -->
     <div class="review">
       <img src="@/assets/image/image.jpg" class="reviewer-image" />
       <div class="review-details">

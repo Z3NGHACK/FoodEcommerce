@@ -1,6 +1,5 @@
 <template>
   <div class="cart-container">
-    <!-- Cart Section -->
     <div class="cart">
       <div class="cart-header">
         <h2 class="cart-title">Cart</h2>
@@ -44,7 +43,6 @@
       <button class="continue-shopping" @click="continueShopping">← Continue Shopping</button>
     </div>
 
-    <!-- Order Summary Section -->
     <div class="order-summary">
       <h3 class="summary-title">Order Summary</h3>
       <hr class="divider" />
@@ -138,7 +136,6 @@
         <span>Total Cost:</span>
         <span>${{ totalCost.toFixed(2) }}</span>
       </div>
-      <!-- <button class="checkout-button" @click="paymentCheckout">Checkout</button> -->
       <button class="checkout-button" @click="checkPayment">Checkout</button>
     </div>
     
@@ -308,9 +305,7 @@ export default {
       this.$router.push({name: "home"})
     },
     calculateTotalPrice() {
-      // Sum up the price of each item (price * quantity) in the cart
       this.totalPrice = this.cart.reduce((acc, item) => {
-        // Default quantity to 1 if it's missing
         const quantity = item.quantity || 1;
         return acc + item.price * quantity;
       }, 0);
@@ -352,32 +347,8 @@ export default {
     },
     save_btnad() {
       this.address.streetAddress;
-      alert(this.address.streetAddress); // Access address from the component's data
+      alert(this.address.streetAddress); 
     },
-
-
-    // closeAddressPopup() {
-    //   this.showAddressPopup = false;
-    //   this.resetAddressForm();
-    // },
-    // // Save the entered address
-    // saveLocalAddress() {
-    //   if (this.address.area === '') {
-    //     alert('Please select a delivery area.');
-    //     return;
-    //   }
-    //   console.log('Address Saved:', this.address);
-    //   alert(Delivery address saved for ${this.address.area}.);
-    //   this.closeAddressPopup();
-    // },
-    // // Reset the form fields
-    // resetAddressForm() {
-    //   this.address = {
-    //     name: '',
-    //     area: '',
-    //     phone: '',
-    //   };
-    // },
 
     submitAddress() {
       console.log('Address submitted:', this.address);
@@ -395,7 +366,7 @@ export default {
     updateTime() {
       const now = new Date();
       const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const month = String(now.getMonth() + 1).padStart(2, '0'); 
       const year = now.getFullYear();
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -496,8 +467,6 @@ export default {
 .payment_credit{
   display: flex;
   flex-direction: column;
-}
-.payment_credit h3{
 }
 .payment_credit input{
   padding: 5px 20px;

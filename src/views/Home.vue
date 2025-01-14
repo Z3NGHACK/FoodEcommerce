@@ -187,10 +187,8 @@ import Product from '@/components/product.vue';
 import SellingItem from '@/components/SellingItem.vue';
 import Service from '@/components/Service.vue';
 import Footer from '@/components/Footer.vue';
-import AddToCart from '@/components/ProductDetail.vue';
 import Search from '@/components/Search.vue';
 import ProductDetail from '@/components/ProductDetail.vue';
-import testingCart from '@/components/testingCart.vue';
 import  {useAuthStore} from '../stores/authStore.js';
 import { ref, onMounted, onUnmounted } from 'vue';
 
@@ -240,10 +238,8 @@ export default{
     Product,
     Comment,
     Footer,
-    AddToCart,
     Search,
     ProductDetail,
-    testingCart,
   },
   data(){
     return{

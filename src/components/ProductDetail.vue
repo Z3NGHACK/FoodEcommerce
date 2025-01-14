@@ -9,9 +9,6 @@
                     <div class="active_stock">
                         <button>In Stock</button>
                     </div>
-                    <!-- <div class="inactive_stock">
-                        <button>Out of Stock</button>
-                    </div> -->
                 </div>
 
                 <h2>{{ title }} {{ productId }}</h2>
@@ -36,14 +33,6 @@
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Add to Cart</span>
                     </div>
-                    <!-- <div class="addCartBtn" @click="clear">
-                        <i class="ri-shopping-cart-2-line"></i>
-                        <span>Clear</span>
-                    </div>
-                    <div class="addCartBtn" @click="testquan">
-                        <i class="ri-shopping-cart-2-line"></i>
-                        <span>Clear</span>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -89,17 +78,17 @@ export default {
             productId: this.productId,
             image: this.image,
             dePrice: this.dePrice,
-            quantity: 1, // Default quantity
+            quantity: 1,
         };
     },
     computed: {
         totalPrice() {
-            return this.quantity * this.price; // Compute total price based on quantity and price
+            return this.quantity * this.price; 
         }
     },
     methods: {
         addCart() {
-            console.log("Quantity:", this.quantity); // Check the quantity value
+            console.log("Quantity:", this.quantity); 
             const product = {
                 title: this.title,
                 price: this.price,
@@ -107,7 +96,7 @@ export default {
                 image: this.image,
                 dePrice: this.dePrice,
                 quantity: this.quantity,
-                totalPrice: this.totalPrice // Use computed totalPrice
+                totalPrice: this.totalPrice 
             };
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);

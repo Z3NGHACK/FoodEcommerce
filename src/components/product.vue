@@ -7,7 +7,6 @@
         <button @click="showProductDetails">View Detail</button>
     </div>
 
-    <!-- Popup -->
     <div v-if="isVisible" class="popup-overlay" @click="toggleVisibleAddToCart">
         <div class="popup-content" @click.stop>
             <ProductDetail 
